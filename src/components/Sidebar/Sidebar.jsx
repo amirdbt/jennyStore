@@ -145,7 +145,7 @@ const Sidebar = (props) => {
           </ListItem>
         </Link>
 
-        <Link className={classes.link} to="#">
+        <Link className={classes.link} to="/customers">
           <ListItem button className={classes.listItems}>
             <ListItemIcon className={classes.iconColor}>
               <People />
@@ -165,16 +165,20 @@ const Sidebar = (props) => {
         </ListItem>
         <Collapse in={op} timeout="auto" unmountOnExit>
           <List component="div" disablePadding>
-            <ListItem button className={classes.nested}>
-              <Typography variant="h6" style={{ fontWeight: 400 }}>
-                List Products
-              </Typography>
-            </ListItem>
-            <ListItem button className={classes.nested}>
-              <Typography variant="h6" style={{ fontWeight: 400 }}>
-                Create Products
-              </Typography>
-            </ListItem>
+            <Link to="/products" className={classes.link}>
+              <ListItem button className={classes.nested}>
+                <Typography variant="h6" style={{ fontWeight: 400 }}>
+                  List Products
+                </Typography>
+              </ListItem>
+            </Link>
+            <Link to="/create" className={classes.link}>
+              <ListItem button className={classes.nested}>
+                <Typography variant="h6" style={{ fontWeight: 400 }}>
+                  Create Products
+                </Typography>
+              </ListItem>
+            </Link>
           </List>
         </Collapse>
 
