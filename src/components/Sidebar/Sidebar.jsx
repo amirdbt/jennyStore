@@ -182,7 +182,7 @@ const Sidebar = (props) => {
           </List>
         </Collapse>
 
-        <Link className={classes.link} to="#">
+        <Link className={classes.link} to="/orders">
           <ListItem button className={classes.listItems}>
             <ListItemIcon className={classes.iconColor}>
               <Folder />

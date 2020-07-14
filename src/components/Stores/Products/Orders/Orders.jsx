@@ -35,8 +35,8 @@ import {
 } from "@material-ui/icons";
 import { Link } from "react-router-dom";
 import axios from "axios";
-import SearchBox from "../../Utility/SearchBox";
-import EditProduct from "./EditProduct";
+// import SearchBox from "../../Utility/SearchBox";
+import EditOrder from "./EditOrder";
 
 const useStyles = makeStyles((theme) => ({
   head: {
@@ -120,7 +120,7 @@ function TablePaginationActions(props) {
   );
 }
 
-const Products = () => {
+const Orders = () => {
   const [patients, setPatients] = useState([]);
   const [totalPatients, setTotalPatients] = useState("");
   const [loading, setLoading] = useState(false);
@@ -142,9 +142,9 @@ const Products = () => {
     setRowsPerPage(parseInt(event.target.value, 10));
     setPage(0);
   };
-  const searchChange = (e) => {
-    setSearchField(e.target.value);
-  };
+  //   const searchChange = (e) => {
+  //     setSearchField(e.target.value);
+  //   };
   //   useEffect(() => {
   //     fetchPatients();
   //   }, []);
@@ -170,24 +170,8 @@ const Products = () => {
         <>
           <div style={{ marginBottom: "10px" }}></div>
           <Grid container spacing={2}>
-            <Grid item xs={12} sm={6}>
-              <Typography variant="h4">All Products</Typography>
-            </Grid>
-            <Grid item xs={12} sm={6}>
-              <Link to="/create" style={{ textDecoration: "none" }}>
-                <Button
-                  variant="contained"
-                  color="primary"
-                  style={{
-                    padding: 13,
-                    backgroundColor: "#0d47a1",
-                    width: 200,
-                  }}
-                >
-                  <AddCircle style={{ marginRight: 5 }} />
-                  NEW PRODUCT
-                </Button>
-              </Link>
+            <Grid item xs={6}>
+              <Typography variant="h4">All Orders</Typography>
             </Grid>
           </Grid>
           <div style={{ marginBottom: "20px" }}></div>
@@ -195,99 +179,47 @@ const Products = () => {
             <Grid container>
               <Grid item xs={12} sm={12}>
                 <TableContainer component={Paper} elevation={0}>
-                  <SearchBox
-                    searchChange={searchChange}
-                    place="Search product..."
-                  />
-
-                  <TextField
-                    id="outlined-select-currency"
-                    select
-                    label="Category"
-                    variant="outlined"
-                    style={{ width: 180, marginRight: 10 }}
-                  >
-                    <MenuItem selected value="All">
-                      All
-                    </MenuItem>
-                    <MenuItem value="Beverages">Beverages</MenuItem>
-                    <MenuItem value="Drinks">Drinks</MenuItem>
-                  </TextField>
-
-                  <TextField
-                    id="outlined-select-currency"
-                    select
-                    label="Availablity"
-                    variant="outlined"
-                    style={{ width: 180 }}
-                  >
-                    <MenuItem selected value="All">
-                      All
-                    </MenuItem>
-                    <MenuItem value="Available">Available</MenuItem>
-                    <MenuItem value="Unavailable">Unavailable</MenuItem>
-                  </TextField>
-
                   <Table aria-label="customized table">
                     <TableHead>
                       <TableRow>
-                        <TableCell></TableCell>
-                        <TableCell className={classes.head}>Name</TableCell>
-                        <TableCell className={classes.head}>
-                          Inventory
-                        </TableCell>
-                        <TableCell className={classes.head}>Details</TableCell>
-                        <TableCell className={classes.head}>Price</TableCell>
+                        <TableCell className={classes.head}>Ref</TableCell>
+                        <TableCell className={classes.head}>Customer</TableCell>
+                        <TableCell className={classes.head}>Total</TableCell>
+                        <TableCell className={classes.head}>Status</TableCell>
                         <TableCell className={classes.head}>Actions</TableCell>
                       </TableRow>
                     </TableHead>
                     <TableBody>
                       <TableRow>
-                        <TableCell>
-                          <Image
-                            style={{ backgroundColor: "#f5f5f5", padding: 10 }}
-                          />
-                        </TableCell>
+                        <TableCell className={classes.text}>FAD103</TableCell>
+                        <TableCell className={classes.text}>Amir DBT</TableCell>
+                        <TableCell className={classes.text}>#1000</TableCell>
                         <TableCell className={classes.text}>
-                          Corn Flakes
-                        </TableCell>
-                        <TableCell className={classes.text}>
+                          {" "}
                           <Chip
                             variant="outlined"
-                            label="IN STOCK"
+                            label="COMPLETED"
                             color="#4caf50"
                           />
                         </TableCell>
                         <TableCell className={classes.text}>
-                          85 in stock in 2 variants
-                        </TableCell>
-                        <TableCell className={classes.text}>#500.00</TableCell>
-                        <TableCell className={classes.text}>
-                          <EditProduct />
+                          <EditOrder />
                         </TableCell>
                       </TableRow>
                       <TableRow>
-                        <TableCell>
-                          <Image
-                            style={{ backgroundColor: "#f5f5f5", padding: 10 }}
-                          />
-                        </TableCell>
+                        <TableCell className={classes.text}>FAD102</TableCell>
+                        <TableCell className={classes.text}>Ton Nta</TableCell>
+                        <TableCell className={classes.text}>#5000</TableCell>
                         <TableCell className={classes.text}>
-                          Golden Mourn
-                        </TableCell>
-                        <TableCell className={classes.text}>
+                          {" "}
                           <Chip
                             variant="outlined"
-                            label="OUT OF STOCK"
+                            label="PENDING"
                             color="#f57c00"
                           />
                         </TableCell>
                         <TableCell className={classes.text}>
-                          0 in stock
-                        </TableCell>
-                        <TableCell className={classes.text}>#1000</TableCell>
-                        <TableCell className={classes.text}>
-                          <EditProduct />
+                          <EditOrder />
                         </TableCell>
                       </TableRow>
                       {/* {(rowsPerPage > 0
@@ -354,4 +286,4 @@ const Products = () => {
   );
 };
 
-export default Products;
+export default Orders;

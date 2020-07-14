@@ -5,6 +5,7 @@ import Signup from "./components/Signup/Signup";
 import Customers from "./components/Stores/Customers";
 import Products from "./components/Stores/Products/Products";
 import CreateProduct from "./components/Stores/Products/CreateProduct";
+import Orders from "./components/Stores/Products/Orders/Orders";
 import { Switch, Route, withRouter } from "react-router-dom";
 
 const Main = withRouter(({ location }) => {
@@ -21,6 +22,7 @@ const Main = withRouter(({ location }) => {
         <Route path="/customers" component={Customers} />
         <Route path="/products" component={Products} />
         <Route path="/create" component={CreateProduct} />
+        <Route path="/orders" component={Orders} />
       </Switch>
     </>
   );
