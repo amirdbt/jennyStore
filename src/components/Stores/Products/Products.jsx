@@ -36,6 +36,7 @@ import {
 import { Link } from "react-router-dom";
 import axios from "axios";
 import SearchBox from "../../Utility/SearchBox";
+import EditProduct from "./EditProduct";
 
 const useStyles = makeStyles((theme) => ({
   head: {
@@ -177,7 +178,11 @@ const Products = () => {
                 <Button
                   variant="contained"
                   color="primary"
-                  style={{ padding: 13, backgroundColor: "#0d47a1" }}
+                  style={{
+                    padding: 13,
+                    backgroundColor: "#0d47a1",
+                    width: 200,
+                  }}
                 >
                   <AddCircle style={{ marginRight: 5 }} />
                   NEW PRODUCT
@@ -258,9 +263,7 @@ const Products = () => {
                         </TableCell>
                         <TableCell className={classes.text}>#500.00</TableCell>
                         <TableCell className={classes.text}>
-                          <IconButton>
-                            <Edit />
-                          </IconButton>
+                          <EditProduct />
                         </TableCell>
                       </TableRow>
                       <TableRow>
@@ -284,9 +287,7 @@ const Products = () => {
                         </TableCell>
                         <TableCell className={classes.text}>#1000</TableCell>
                         <TableCell className={classes.text}>
-                          <IconButton>
-                            <Edit />
-                          </IconButton>
+                          <EditProduct />
                         </TableCell>
                       </TableRow>
                       {/* {(rowsPerPage > 0
