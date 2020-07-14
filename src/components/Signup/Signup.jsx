@@ -259,7 +259,11 @@ const Signup = () => {
                   <div style={{ marginBottom: "20px" }}></div>
                   <Grid container>
                     <Grid item xs>
-                      <Link href="#" variant="body2">
+                      <Link
+                        href="/signin"
+                        variant="body2"
+                        style={{ fontSize: 17, color: "#9e9e9e" }}
+                      >
                         Have an account?
                       </Link>
                     </Grid>
