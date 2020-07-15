@@ -21,7 +21,7 @@ import axios from "axios";
 import { Formik } from "formik";
 import * as Yup from "yup";
 import { Alert, AlertTitle } from "@material-ui/lab";
-import { Update, Edit } from "@material-ui/icons";
+import { Edit } from "@material-ui/icons";
 
 const useStyles = makeStyles((theme) => ({
   dialog: {
