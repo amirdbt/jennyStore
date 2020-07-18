@@ -125,10 +125,9 @@ function TablePaginationActions(props) {
 }
 
 const Products = () => {
-  const [patients, setPatients] = useState([]);
-  const [totalPatients, setTotalPatients] = useState("");
+  const [products, setProducts] = useState([]);
   const [loading, setLoading] = useState(false);
-  //   const token = localStorage.getItem("token");
+  const token = localStorage.getItem("token");
   const classes = useStyles();
   const [page, setPage] = React.useState(0);
   const [rowsPerPage, setRowsPerPage] = React.useState(5);
@@ -136,7 +135,7 @@ const Products = () => {
   const [searchField, setSearchField] = useState("");
 
   const emptyRows =
-    rowsPerPage - Math.min(rowsPerPage, patients.length - page * rowsPerPage);
+    rowsPerPage - Math.min(rowsPerPage, products.length - page * rowsPerPage);
 
   const handleChangePage = (event, newPage) => {
     setPage(newPage);
@@ -149,22 +148,27 @@ const Products = () => {
   const searchChange = (e) => {
     setSearchField(e.target.value);
   };
-  //   useEffect(() => {
-  //     fetchPatients();
-  //   }, []);
+  useEffect(() => {
+    fetchProducts();
+  }, []);
 
-  //   const fetchPatients = async () => {
-  //     setLoading(true);
-  //     const response = await axios.get(``, {
-  //       headers: { Authorization: `${token}` },
-  //     });
-  //     setPatients(response.data.patients);
-  //     setTotalPatients(response.data.totalPatients);
-  //     setLoading(false);
-  //     console.log(response.data);
-  //   };
-  const filteredPatients = patients.filter((patient) => {
-    return patient.lastName.toLowerCase().includes(searchField.toLowerCase());
+  const fetchProducts = () => {
+    setLoading(true);
+    axios
+      .get(`https://jenifa-stores.herokuapp.com/products`, {
+        headers: { Authorization: `${token}` },
+      })
+      .then((res) => {
+        console.log(res.data);
+        setProducts(res.data.products);
+        setLoading(false);
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+  };
+  const filteredProducts = products.filter((product) => {
+    return product.name.toLowerCase().includes(searchField.toLowerCase());
   });
   return (
     <div className="content">
@@ -237,83 +241,66 @@ const Products = () => {
                         <TableCell className={classes.head}>
                           Inventory
                         </TableCell>
-                        <TableCell className={classes.head}>Details</TableCell>
+                        <TableCell className={classes.head}>
+                          Description
+                        </TableCell>
+                        <TableCell className={classes.head}>Category</TableCell>
+                        <TableCell className={classes.head}>Quantity</TableCell>
                         <TableCell className={classes.head}>Price</TableCell>
                         <TableCell className={classes.head}>Actions</TableCell>
                       </TableRow>
                     </TableHead>
                     <TableBody>
-                      <TableRow>
-                        <TableCell>
-                          <Image
-                            style={{ backgroundColor: "#f5f5f5", padding: 10 }}
-                          />
-                        </TableCell>
-                        <TableCell className={classes.text}>
-                          Corn Flakes
-                        </TableCell>
-                        <TableCell className={classes.text}>
-                          <Chip
-                            variant="outlined"
-                            label="IN STOCK"
-                            color="#4caf50"
-                          />
-                        </TableCell>
-                        <TableCell className={classes.text}>
-                          85 in stock in 2 variants
-                        </TableCell>
-                        <TableCell className={classes.text}>#500.00</TableCell>
-                        <TableCell className={classes.text}>
-                          <EditProduct />
-                        </TableCell>
-                      </TableRow>
-                      <TableRow>
-                        <TableCell>
-                          <Image
-                            style={{ backgroundColor: "#f5f5f5", padding: 10 }}
-                          />
-                        </TableCell>
-                        <TableCell className={classes.text}>
-                          Golden Mourn
-                        </TableCell>
-                        <TableCell className={classes.text}>
-                          <Chip
-                            variant="outlined"
-                            label="OUT OF STOCK"
-                            color="#f57c00"
-                          />
-                        </TableCell>
-                        <TableCell className={classes.text}>
-                          0 in stock
-                        </TableCell>
-                        <TableCell className={classes.text}>#1000</TableCell>
-                        <TableCell className={classes.text}>
-                          <EditProduct />
-                        </TableCell>
-                      </TableRow>
-                      {/* {(rowsPerPage > 0
-                      ? filteredPatients.slice(
-                          page * rowsPerPage,
-                          page * rowsPerPage + rowsPerPage
-                        )
-                      : filteredPatients
-                    ).map((patient) => (
-                      <TableRow key={patient.id}>
-                        <TableCell>{patient.firstName}</TableCell>
-                        <TableCell>{patient.lastName}</TableCell>
-                        <TableCell>{patient.email}</TableCell>
-                        <TableCell>{patient.gender}</TableCell>
-                        <TableCell>{patient.userName}</TableCell>
-                        <TableCell>{patient.phoneNumber}</TableCell>
-                        <TableCell>
-                          <Link to={`/all-patients/${patient.userName}`}>
-                            <IconButton>
-                              <ArrowForward />
-                            </IconButton>
-                          </Link>
-                        </TableCell>
-                      </TableRow>
-                    ))} */}
+                      {(rowsPerPage > 0
+                        ? filteredProducts.slice(
+                            page * rowsPerPage,
+                            page * rowsPerPage + rowsPerPage
+                          )
+                        : filteredProducts
+                      ).map((product) => (
+                        <TableRow key={product._id}>
+                          <TableCell>
+                            <Image
+                              style={{
+                                backgroundColor: "#f5f5f5",
+                                padding: 10,
+                              }}
+                            />
+                          </TableCell>
+                          <TableCell>{product.name}</TableCell>
+                          <TableCell>
+                            {product.inStock ? (
+                              <Chip
+                                variant="default"
+                                label="IN STOCK"
+                                style={{ color: "#4caf50" }}
+                              />
+                            ) : (
+                              <Chip
+                                variant="default"
+                                label="OUT OF STOCK"
+                                style={{ color: "#f57c00" }}
+                              />
+                            )}
+                          </TableCell>
+                          <TableCell>
+                            {product.description === ""
+                              ? "No description"
+                              : product.description}
+                          </TableCell>
+                          <TableCell>{product.category}</TableCell>
+                          <TableCell>
+                            {product.quantity === ""
+                              ? "Unknown"
+                              : product.quantity}
+                          </TableCell>
+                          <TableCell>{product.price}</TableCell>
+
+                          <TableCell>
+                            <EditProduct />
+                          </TableCell>
+                        </TableRow>
+                      ))}
 
                       {emptyRows > 0 && (
                         <TableRow style={{ height: 53 * emptyRows }}>
@@ -331,7 +318,7 @@ const Products = () => {
                             { label: "All", value: -1 },
                           ]}
                           colSpan={3}
-                          count={filteredPatients.length}
+                          count={filteredProducts.length}
                           rowsPerPage={rowsPerPage}
                           page={page}
                           SelectProps={{
