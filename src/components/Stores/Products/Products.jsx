@@ -38,6 +38,7 @@ import { Link } from "react-router-dom";
 import axios from "axios";
 import SearchBox from "../../Utility/SearchBox";
 import EditProduct from "./EditProduct";
+import { Alert, AlertTitle } from "@material-ui/lab";
 
 const useStyles = makeStyles((theme) => ({
   head: {
@@ -128,6 +129,9 @@ function TablePaginationActions(props) {
 const Products = () => {
   const [products, setProducts] = useState([]);
   const [loading, setLoading] = useState(false);
+  const [message, setMessage] = useState("");
+  const [severity, setSeverity] = useState("success");
+  const [error, setError] = useState(false);
   const token = localStorage.getItem("token");
   const classes = useStyles();
   const [page, setPage] = React.useState(0);
@@ -171,12 +175,44 @@ const Products = () => {
   const filteredProducts = products.filter((product) => {
     return product.name.toLowerCase().includes(searchField.toLowerCase());
   });
+
+  const deleteProduct = (product_id) => {
+    axios
+      .delete(`https://jenifa-stores.herokuapp.com/products/${product_id}`, {
+        headers: { Authorization: `${token}` },
+      })
+      .then((res) => {
+        console.log(res);
+        setMessage(res.data);
+        setError(true);
+        setTimeout(() => {
+          window.location.reload(false);
+        }, 1000);
+      })
+      .catch((error) => {
+        console.log(error);
+        setMessage("Record could not be deleted, Try again");
+        setError(true);
+        setSeverity("error");
+        setTimeout(() => {
+          window.location.reload(false);
+        }, 1000);
+      });
+  };
+
   return (
     <div className="content">
       {loading ? (
         <CircularProgress style={{ marginLeft: "50%" }} />
       ) : (
         <>
+          {error ? (
+            <Alert style={{ marginTop: "20px" }} severity={severity}>
+              {message}
+            </Alert>
+          ) : (
+            <div></div>
+          )}
           <div style={{ marginBottom: "10px" }}></div>
 
           <div className={classes.display}>
@@ -302,7 +338,16 @@ const Products = () => {
                           <TableCell style={{ display: "flex" }}>
                             <EditProduct product={product} />
 
-                            <IconButton>
+                            <IconButton
+                              onClick={() => {
+                                if (
+                                  window.confirm(
+                                    "Are you sure you want to delete this product?"
+                                  )
+                                );
+                                deleteProduct(product._id);
+                              }}
+                            >
                               <Delete style={{ color: "#d32f2f" }} />
                             </IconButton>
                           </TableCell>
