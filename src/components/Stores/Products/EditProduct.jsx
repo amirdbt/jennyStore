@@ -285,6 +285,34 @@ const EditProduct = ({ product }) => {
                       )}
                     </FormControl>
                   </div>
+                  <div style={{ marginBottom: "20px" }}></div>
+                  <div>
+                    <FormControl fullWidth variant="outlined">
+                      <InputLabel id="demo-simple-select-outlined-label">
+                        In Stock
+                      </InputLabel>
+                      <Select
+                        labelId="demo-simple-select-outlined-label"
+                        id="demo-simple-select-outlined"
+                        value={values.inStock}
+                        onChange={handleChange}
+                        error={err}
+                        onBlur={handleBlur}
+                        className={errors.inStock && touched.inStock && "error"}
+                        label="In Stock"
+                        name="inStock"
+                      >
+                        <MenuItem value="">
+                          <em>None</em>
+                        </MenuItem>
+                        <MenuItem value="true">True</MenuItem>
+                        <MenuItem vale="false">False</MenuItem>
+                      </Select>
+                      {errors.inStock && touched.inStock && (
+                        <div className={classes.error}> {errors.inStock} </div>
+                      )}
+                    </FormControl>
+                  </div>
 
                   <div style={{ marginBottom: "20px" }}></div>
                   <div>
