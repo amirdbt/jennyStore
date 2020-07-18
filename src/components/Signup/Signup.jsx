@@ -76,7 +76,7 @@ const Signup = () => {
               localStorage.setItem("token", res.data.token);
 
               setLoading(false);
-              // history.push("/profile");
+              history.push("/");
             })
             .catch((err) => {
               console.log(err);

@@ -3,19 +3,15 @@ import {
   Button,
   Typography,
   TextField,
-  Link,
   LinearProgress,
   makeStyles,
   CssBaseline,
   Container,
   Grid,
-  InputAdornment,
-  IconButton,
   Card,
   Divider,
 } from "@material-ui/core";
 import { useHistory } from "react-router-dom";
-import { Visibility, VisibilityOff } from "@material-ui/icons";
 import { Alert } from "@material-ui/lab";
 import { Formik } from "formik";
 import * as Yup from "yup";

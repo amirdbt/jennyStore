@@ -68,11 +68,11 @@ const Signin = () => {
           axios
             .post(``, values)
             .then((res) => {
-              console.log(res);
-              localStorage.setItem("token", res.data.token);
+              // console.log(res);
+              // localStorage.setItem("token", res.data.token);
 
               setLoading(false);
-              // history.push("/profile");
+              history.push("/");
             })
             .catch((err) => {
               console.log(err);
