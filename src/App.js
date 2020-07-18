@@ -6,6 +6,7 @@ import Customers from "./components/Stores/Customers";
 import Products from "./components/Stores/Products/Products";
 import CreateProduct from "./components/Stores/Products/CreateProduct";
 import Orders from "./components/Stores/Products/Orders/Orders";
+import Dashboard from "./components/Dashboard/Dashboard";
 import { Switch, Route, withRouter } from "react-router-dom";
 
 const Main = withRouter(({ location }) => {
@@ -17,6 +18,7 @@ const Main = withRouter(({ location }) => {
         </>
       )}
       <Switch>
+        <Route exact path="/" component={Dashboard} />
         <Route path="/signin" component={Signin} />
         <Route path="/signup" component={Signup} />
         <Route path="/customers" component={Customers} />
