@@ -16,6 +16,7 @@ import { Alert } from "@material-ui/lab";
 import { Formik } from "formik";
 import * as Yup from "yup";
 import axios from "axios";
+import CreateCategory from "./CreateCategory";
 
 const useStyles = makeStyles((theme) => ({
   paper: {
@@ -39,6 +40,11 @@ const useStyles = makeStyles((theme) => ({
   error: {
     color: "rgb(235, 54, 54)",
   },
+  display: {
+    display: "flex",
+    justifyContent: "space-between",
+    marginTop: theme.spacing(3),
+  },
 }));
 
 const CreateProduct = () => {
@@ -59,10 +65,11 @@ const CreateProduct = () => {
         price: "",
         category: "",
         quantity: "",
+        inStock: "",
       }}
       onSubmit={(values, { setSubmitting }) => {
         setTimeout(() => {
-          console.log("Signing in", values);
+          console.log("Creating product", values);
           setLoading(true);
           axios
             .post(``, values)
@@ -106,7 +113,7 @@ const CreateProduct = () => {
               <Container component={Card} maxWidth="lg">
                 <CssBaseline />
                 {err ? <Alert severity="error">{message}</Alert> : <div></div>}
-                <div className={classes.paper}>
+                <div className="">
                   <div className={classes.display}>
                     <Typography
                       component="h1"
@@ -115,6 +122,7 @@ const CreateProduct = () => {
                     >
                       Create a new product
                     </Typography>
+                    <CreateCategory />
                   </div>
 
                   <form onSubmit={handleSubmit} className={classes.form}>

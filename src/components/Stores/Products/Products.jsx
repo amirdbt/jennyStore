@@ -49,6 +49,10 @@ const useStyles = makeStyles((theme) => ({
     fontWeight: 300,
     // color: "#fff",
   },
+  display: {
+    display: "flex",
+    justifyContent: "space-between",
+  },
 }));
 const useStyles1 = makeStyles((theme) => ({
   root: {
@@ -169,27 +173,24 @@ const Products = () => {
       ) : (
         <>
           <div style={{ marginBottom: "10px" }}></div>
-          <Grid container spacing={2}>
-            <Grid item xs={12} sm={6}>
-              <Typography variant="h4">All Products</Typography>
-            </Grid>
-            <Grid item xs={12} sm={6}>
-              <Link to="/create" style={{ textDecoration: "none" }}>
-                <Button
-                  variant="contained"
-                  color="primary"
-                  style={{
-                    padding: 13,
-                    backgroundColor: "#0d47a1",
-                    width: 200,
-                  }}
-                >
-                  <AddCircle style={{ marginRight: 5 }} />
-                  NEW PRODUCT
-                </Button>
-              </Link>
-            </Grid>
-          </Grid>
+
+          <div className={classes.display}>
+            <Typography variant="h4">All Products</Typography>
+            <Link to="/create" style={{ textDecoration: "none" }}>
+              <Button
+                variant="contained"
+                color="primary"
+                style={{
+                  padding: 13,
+                  backgroundColor: "#0d47a1",
+                  width: 200,
+                }}
+              >
+                <AddCircle style={{ marginRight: 5 }} />
+                NEW PRODUCT
+              </Button>
+            </Link>
+          </div>
           <div style={{ marginBottom: "20px" }}></div>
           <Container component={Card} maxWidth="lg">
             <Grid container>

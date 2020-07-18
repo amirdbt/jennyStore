@@ -111,7 +111,7 @@ function TablePaginationActions(props) {
   );
 }
 
-const Customers = () => {
+const Categories = () => {
   const [patients, setPatients] = useState([]);
   const [totalPatients, setTotalPatients] = useState("");
   const [loading, setLoading] = useState(false);
@@ -264,4 +264,4 @@ const Customers = () => {
   );
 };
 
-export default Customers;
+export default Categories;

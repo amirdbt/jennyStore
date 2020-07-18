@@ -25,6 +25,7 @@ import {
   Folder,
   ExpandLess,
   ExpandMore,
+  Category,
 } from "@material-ui/icons";
 import MenuIcon from "@material-ui/icons/Menu";
 
@@ -142,15 +143,6 @@ const Sidebar = (props) => {
               <Dashboard />
             </ListItemIcon>
             <Typography variant="h5">Dashboard</Typography>
-          </ListItem>
-        </Link>
-
-        <Link className={classes.link} to="/customers">
-          <ListItem button className={classes.listItems}>
-            <ListItemIcon className={classes.iconColor}>
-              <People />
-            </ListItemIcon>
-            <Typography variant="h5">Customers</Typography>
           </ListItem>
         </Link>
 

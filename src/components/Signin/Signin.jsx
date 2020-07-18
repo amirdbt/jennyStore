@@ -68,8 +68,8 @@ const Signin = () => {
           axios
             .post(`https://jenifa-stores.herokuapp.com/stores/login`, values)
             .then((res) => {
-              // console.log(res);
-              localStorage.setItem("token", res.data.token);
+              console.log(res);
+              localStorage.setItem("token", res.data.storeToken);
               localStorage.setItem("storeName", res.data.store.storeName);
               localStorage.setItem("role", res.data.store.role);
 
