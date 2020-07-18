@@ -31,6 +31,7 @@ import {
   LastPage,
   Image,
   Edit,
+  Delete,
   AddCircle,
 } from "@material-ui/icons";
 import { Link } from "react-router-dom";
@@ -247,7 +248,9 @@ const Products = () => {
                         <TableCell className={classes.head}>Category</TableCell>
                         <TableCell className={classes.head}>Quantity</TableCell>
                         <TableCell className={classes.head}>Price</TableCell>
-                        <TableCell className={classes.head}>Actions</TableCell>
+                        <TableCell colSpan="2" className={classes.head}>
+                          Actions
+                        </TableCell>
                       </TableRow>
                     </TableHead>
                     <TableBody>
@@ -296,8 +299,12 @@ const Products = () => {
                           </TableCell>
                           <TableCell>{product.price}</TableCell>
 
-                          <TableCell>
-                            <EditProduct />
+                          <TableCell style={{ display: "flex" }}>
+                            <EditProduct product={product} />
+
+                            <IconButton>
+                              <Delete style={{ color: "#d32f2f" }} />
+                            </IconButton>
                           </TableCell>
                         </TableRow>
                       ))}

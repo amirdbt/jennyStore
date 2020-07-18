@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import {
   Button,
   Dialog,
@@ -13,6 +13,12 @@ import {
   Snackbar,
   Slide,
   IconButton,
+  FormControl,
+  InputLabel,
+  Select,
+  MenuItem,
+  Backdrop,
+  CircularProgress,
 } from "@material-ui/core";
 import axios from "axios";
 import { Formik } from "formik";
@@ -29,19 +35,56 @@ const useStyles = makeStyles((theme) => ({
     // marginTop: "-20px",
     marginBottom: "10px",
   },
+  input: {
+    display: "none",
+  },
+  backdrop: {
+    zIndex: theme.zIndex.drawer + 1,
+    color: "#fff",
+  },
 }));
 
-const EditProduct = () => {
+const EditProduct = ({ product }) => {
+  console.log(product);
+  const {
+    name,
+    price,
+    description,
+    category,
+    quantity,
+    image,
+    inStock,
+    _id,
+  } = product;
   const [open, setOpen] = useState(false);
   const [al, setAl] = useState(false);
   const [err, setErr] = useState(false);
   const [message, setMessage] = useState("");
   const [loading, setLoading] = useState(false);
   const [severity, setSeverity] = useState("success");
+  const [categories, setCategories] = useState([]);
   const theme = useTheme();
-  //   const token = localStorage.getItem("token");
+  const token = localStorage.getItem("token");
   const fullScreen = useMediaQuery(theme.breakpoints.down("sm"));
   const classes = useStyles();
+
+  useEffect(() => {
+    fetchCategories();
+  }, []);
+
+  const fetchCategories = () => {
+    axios
+      .get("https://jenifa-stores.herokuapp.com/stores", {
+        headers: { Authorization: `${token}` },
+      })
+      .then((res) => {
+        console.log(res.data.categoryArray);
+        setCategories(res.data.categoryArray);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  };
 
   const handleClickOpen = () => {
     setOpen(true);
@@ -53,49 +96,57 @@ const EditProduct = () => {
   return (
     <Formik
       initialValues={{
-        product_name: "",
-        description: "",
-        price: "",
-        category: "",
-        quantity: "",
+        name,
+        price,
+        category,
+        description,
+        quantity,
+        inStock,
+        image,
       }}
       onSubmit={(values, { setSubmitting, resetForm }) => {
-        // setTimeout(() => {
-        //   console.log("Updating Record", values);
-        //   setLoading(true);
-        //   axios
-        //     .patch(` `, values, { headers: { Authorization: `${token}` } })
-        //     .then((res) => {
-        //       console.log(res);
-        //       //   console.log(res.data.message);
-        //       //   setMessage("Record updated successfully");
-        //       //   setAl(true);
-        //       //   setLoading(false);
-        //       //   resetForm({});
-        //       //   setTimeout(() => {
-        //       //     window.location.reload(false);
-        //       //   }, 1000);
-        //     })
-        //     .catch((err) => {
-        //       console.log(err);
-        //       //   setMessage("Record could not be updated, try again");
-        //       //   setErr(true);
-        //       //   setAl(true);
-        //       //   setSeverity("error");
-        //       //   setLoading(false);
-        //       //   setTimeout(() => {
-        //       //     window.location.reload(false);
-        //       //   }, 1000);
-        //     });
-        //   setSubmitting(false);
-        // }, 200);
+        setTimeout(() => {
+          console.log("Updating Record", values);
+          setLoading(true);
+          axios
+            .patch(
+              `https://jenifa-stores.herokuapp.com/products/${_id} `,
+              values,
+              { headers: { Authorization: `${token}` } }
+            )
+            .then((res) => {
+              console.log(res);
+              console.log(res.data.message);
+              setMessage("Product updated successfully");
+              setAl(true);
+              setLoading(false);
+              //   resetForm({});
+              setTimeout(() => {
+                window.location.reload(false);
+              }, 1000);
+            })
+            .catch((err) => {
+              console.log(err);
+              setMessage("Product could not be updated, try again");
+              setErr(true);
+              setAl(true);
+              setSeverity("error");
+              setLoading(false);
+              setTimeout(() => {
+                window.location.reload(false);
+              }, 1000);
+            });
+          setSubmitting(false);
+        }, 200);
       }}
       validationSchema={Yup.object().shape({
-        product_name: Yup.string().required("Required"),
-        description: Yup.string().required("Required"),
+        name: Yup.string().required("Required"),
+        description: Yup.string(),
         price: Yup.string().required("Required"),
         category: Yup.string().required("Required"),
-        quantity: Yup.string().required("Required"),
+        quantity: Yup.string(),
+        inStock: Yup.string(),
+        image: Yup.string(),
       })}
     >
       {(props) => {
@@ -122,6 +173,7 @@ const EditProduct = () => {
               <DialogTitle id="responsive-dialog-title">
                 {"UPDATE RECORD"}
               </DialogTitle>
+
               {al ? (
                 <>
                   <Alert severity={severity}>
@@ -144,31 +196,26 @@ const EditProduct = () => {
                 <DialogContent>
                   <div>
                     <TextField
-                      name="product_name"
+                      name="name"
                       label="Product Name *"
                       fullWidth
                       variant="outlined"
                       type="text"
                       error={err}
-                      value={values.product_name}
-                      className={
-                        errors.product_name && touched.product_name && "error"
-                      }
+                      value={values.name}
+                      className={errors.name && touched.name && "error"}
                       onChange={handleChange}
                       onBlur={handleBlur}
                     />
-                    {errors.product_name && touched.product_name && (
-                      <div className={classes.error}>
-                        {" "}
-                        {errors.product_name}{" "}
-                      </div>
+                    {errors.name && touched.name && (
+                      <div className={classes.error}> {errors.name} </div>
                     )}
                   </div>
                   <div style={{ marginBottom: "20px" }}></div>
                   <div>
                     <TextField
                       name="description"
-                      label="Description *"
+                      label="Description"
                       fullWidth
                       type="text"
                       variant="outlined"
@@ -207,22 +254,38 @@ const EditProduct = () => {
                   </div>
                   <div style={{ marginBottom: "20px" }}></div>
                   <div>
-                    <TextField
-                      name="category"
-                      label="Category *"
-                      fullWidth
-                      type="text"
-                      variant="outlined"
-                      error={err}
-                      className={errors.category && touched.category && "error"}
-                      value={values.category}
-                      onChange={handleChange}
-                      onBlur={handleBlur}
-                    />
-                    {errors.category && touched.category && (
-                      <div className={classes.error}> {errors.category} </div>
-                    )}
+                    <FormControl fullWidth variant="outlined">
+                      <InputLabel id="demo-simple-select-outlined-label">
+                        Category
+                      </InputLabel>
+                      <Select
+                        labelId="demo-simple-select-outlined-label"
+                        id="demo-simple-select-outlined"
+                        value={values.category}
+                        onChange={handleChange}
+                        error={err}
+                        onBlur={handleBlur}
+                        className={
+                          errors.category && touched.category && "error"
+                        }
+                        label="Category"
+                        name="category"
+                      >
+                        <MenuItem value="">
+                          <em>None</em>
+                        </MenuItem>
+                        {categories.map((category) => {
+                          return (
+                            <MenuItem value={category}>{category}</MenuItem>
+                          );
+                        })}
+                      </Select>
+                      {errors.category && touched.category && (
+                        <div className={classes.error}> {errors.category} </div>
+                      )}
+                    </FormControl>
                   </div>
+
                   <div style={{ marginBottom: "20px" }}></div>
                   <div>
                     <TextField
@@ -243,6 +306,25 @@ const EditProduct = () => {
                       <div className={classes.error}> {errors.quantity} </div>
                     )}
                   </div>
+                  <div style={{ marginBottom: "20px" }}></div>
+                  <div>
+                    <input
+                      accept="image/*"
+                      className={classes.input}
+                      id="contained-button-file"
+                      multiple
+                      type="file"
+                    />
+                    <label htmlFor="contained-button-file">
+                      <Button
+                        variant="outlined"
+                        color="primary"
+                        component="span"
+                      >
+                        Upload Image
+                      </Button>
+                    </label>
+                  </div>
                 </DialogContent>
                 <DialogActions>
                   <Button autoFocus onClick={handleClose} color="secondary">
@@ -256,12 +338,9 @@ const EditProduct = () => {
                   >
                     Submit
                   </Button>
-                  {loading && (
-                    <LinearProgress
-                      variant="query"
-                      style={{ marginTop: "10px" }}
-                    />
-                  )}
+                  <Backdrop className={classes.backdrop} open={loading}>
+                    <CircularProgress color="inherit" />
+                  </Backdrop>
                 </DialogActions>
               </form>
             </Dialog>
