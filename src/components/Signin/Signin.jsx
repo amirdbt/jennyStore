@@ -58,7 +58,7 @@ const Signin = () => {
   return (
     <Formik
       initialValues={{
-        email: "",
+        storeName: "",
         password: "",
       }}
       onSubmit={(values, { setSubmitting }) => {
@@ -66,18 +66,20 @@ const Signin = () => {
           console.log("Signing in", values);
           setLoading(true);
           axios
-            .post(``, values)
+            .post(`https://jenifa-stores.herokuapp.com/stores/login`, values)
             .then((res) => {
               // console.log(res);
-              // localStorage.setItem("token", res.data.token);
+              localStorage.setItem("token", res.data.token);
+              localStorage.setItem("storeName", res.data.store.storeName);
+              localStorage.setItem("role", res.data.store.role);
 
               setLoading(false);
               history.push("/");
             })
             .catch((err) => {
               console.log(err);
-              console.log(err);
-              // setMessage(err.response.data.error);
+
+              setMessage(err.response.data.message);
               setErr(true);
               setLoading(false);
             });
@@ -85,7 +87,7 @@ const Signin = () => {
         }, 200);
       }}
       validationSchema={Yup.object().shape({
-        email: Yup.string().email("Invalid email").required("Required"),
+        storeName: Yup.string().required("Required"),
         password: Yup.string()
           .required("No password provided")
           .min(8)
@@ -136,19 +138,24 @@ const Signin = () => {
                   <Grid container spacing={2}>
                     <Grid item xs={12}>
                       <TextField
-                        name="email"
-                        label="Email Address *"
+                        name="storeName"
+                        label="Store Name *"
                         fullWidth
                         variant="outlined"
-                        type="email"
+                        type="text"
                         error={err}
-                        value={values.email}
-                        className={errors.email && touched.email && "error"}
+                        value={values.storeName}
+                        className={
+                          errors.storeName && touched.storeName && "error"
+                        }
                         onChange={handleChange}
                         onBlur={handleBlur}
                       />
-                      {errors.email && touched.email && (
-                        <div className={classes.error}> {errors.email} </div>
+                      {errors.storeName && touched.storeName && (
+                        <div className={classes.error}>
+                          {" "}
+                          {errors.storeName}{" "}
+                        </div>
                       )}
                     </Grid>
                     <Grid item xs={12}>

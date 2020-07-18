@@ -8,6 +8,7 @@ import CreateProduct from "./components/Stores/Products/CreateProduct";
 import Orders from "./components/Stores/Products/Orders/Orders";
 import Dashboard from "./components/Dashboard/Dashboard";
 import { Switch, Route, withRouter } from "react-router-dom";
+import AuthGuard from "./components/Utility/AuthGuard";
 
 const Main = withRouter(({ location }) => {
   return (
@@ -18,13 +19,13 @@ const Main = withRouter(({ location }) => {
         </>
       )}
       <Switch>
-        <Route exact path="/" component={Dashboard} />
+        <AuthGuard exact path="/" component={Dashboard} />
         <Route path="/signin" component={Signin} />
         <Route path="/signup" component={Signup} />
-        <Route path="/customers" component={Customers} />
-        <Route path="/products" component={Products} />
-        <Route path="/create" component={CreateProduct} />
-        <Route path="/orders" component={Orders} />
+        <AuthGuard path="/customers" component={Customers} />
+        <AuthGuard path="/products" component={Products} />
+        <AuthGuard path="/create" component={CreateProduct} />
+        <AuthGuard path="/orders" component={Orders} />
       </Switch>
     </>
   );
