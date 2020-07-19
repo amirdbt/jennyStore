@@ -39,6 +39,7 @@ import axios from "axios";
 import SearchBox from "../../Utility/SearchBox";
 import EditProduct from "./EditProduct";
 import { Alert, AlertTitle } from "@material-ui/lab";
+import Categories from "../Categories";
 
 const useStyles = makeStyles((theme) => ({
   head: {
@@ -232,6 +233,7 @@ const Products = () => {
               </Button>
             </Link>
           </div>
+          <Categories />
           <div style={{ marginBottom: "20px" }}></div>
           <Container component={Card} maxWidth="lg">
             <Grid container>
