@@ -11,12 +11,13 @@ import {
   TableRow,
   Paper,
   CircularProgress,
-  Chip,
+  Button,
 } from "@material-ui/core";
 import axios from "axios";
 import moment from "moment";
 import { Alert, AlertTitle } from "@material-ui/lab";
 import EditProfile from "./EditProfile";
+import { Delete } from "@material-ui/icons";
 
 const Dashboard = () => {
   const token = localStorage.getItem("token");
@@ -49,6 +50,9 @@ const Dashboard = () => {
       });
   };
 
+  const deactivateAccount = () => {
+    console.log("Delete");
+  };
   return (
     <div className="content">
       {loading ? (
@@ -160,7 +164,26 @@ const Dashboard = () => {
                           <Typography>Other Actions</Typography>
                           <hr />
                           <div style={{ marginBottom: "20px" }}></div>
-                          <EditProfile store={store} />
+                          <div style={{ display: "flex" }}>
+                            <EditProfile store={store} />
+
+                            <Button
+                              color="secondary"
+                              variant="contained"
+                              style={{ marginLeft: 10 }}
+                              onClick={() => {
+                                if (
+                                  window.confirm(
+                                    "Are you sure you want to deactivate this account?"
+                                  )
+                                );
+                                deactivateAccount();
+                              }}
+                            >
+                              <Delete />
+                              Deactivate Account
+                            </Button>
+                          </div>
                         </CardContent>
                       </Card>
                     </Grid>

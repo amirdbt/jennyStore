@@ -34,6 +34,7 @@ import {
   AddCircle,
 } from "@material-ui/icons";
 import { Link } from "react-router-dom";
+import moment from "moment";
 import axios from "axios";
 // import SearchBox from "../../Utility/SearchBox";
 import EditOrder from "./EditOrder";
@@ -121,10 +122,10 @@ function TablePaginationActions(props) {
 }
 
 const Orders = () => {
-  const [patients, setPatients] = useState([]);
-  const [totalPatients, setTotalPatients] = useState("");
+  const [orders, setOrders] = useState([]);
+  // const [totalPatients, setTotalPatients] = useState("");
   const [loading, setLoading] = useState(false);
-  //   const token = localStorage.getItem("token");
+  const token = localStorage.getItem("token");
   const classes = useStyles();
   const [page, setPage] = React.useState(0);
   const [rowsPerPage, setRowsPerPage] = React.useState(5);
@@ -132,7 +133,7 @@ const Orders = () => {
   const [searchField, setSearchField] = useState("");
 
   const emptyRows =
-    rowsPerPage - Math.min(rowsPerPage, patients.length - page * rowsPerPage);
+    rowsPerPage - Math.min(rowsPerPage, orders.length - page * rowsPerPage);
 
   const handleChangePage = (event, newPage) => {
     setPage(newPage);
@@ -142,25 +143,31 @@ const Orders = () => {
     setRowsPerPage(parseInt(event.target.value, 10));
     setPage(0);
   };
-  //   const searchChange = (e) => {
-  //     setSearchField(e.target.value);
-  //   };
-  //   useEffect(() => {
-  //     fetchPatients();
-  //   }, []);
+  const searchChange = (e) => {
+    setSearchField(e.target.value);
+  };
+  useEffect(() => {
+    fetchOrders();
+  }, []);
 
-  //   const fetchPatients = async () => {
-  //     setLoading(true);
-  //     const response = await axios.get(``, {
-  //       headers: { Authorization: `${token}` },
-  //     });
-  //     setPatients(response.data.patients);
-  //     setTotalPatients(response.data.totalPatients);
-  //     setLoading(false);
-  //     console.log(response.data);
-  //   };
-  const filteredPatients = patients.filter((patient) => {
-    return patient.lastName.toLowerCase().includes(searchField.toLowerCase());
+  const fetchOrders = () => {
+    setLoading(true);
+    axios
+      .get(`https://jenifa-stores.herokuapp.com/bookings`, {
+        headers: { Authorization: `${token}` },
+      })
+      .then((res) => {
+        console.log(res);
+        setOrders(res.data.bookings);
+        setLoading(false);
+      })
+      .catch((error) => {
+        console.log(error);
+        setLoading(false);
+      });
+  };
+  const filteredOrders = orders.filter((order) => {
+    return order.lastName.toLowerCase().includes(searchField.toLowerCase());
   });
   return (
     <div className="content">
@@ -184,67 +191,37 @@ const Orders = () => {
                       <TableRow>
                         <TableCell className={classes.head}>Ref</TableCell>
                         <TableCell className={classes.head}>Customer</TableCell>
-                        <TableCell className={classes.head}>Total</TableCell>
+                        <TableCell className={classes.head}>Category</TableCell>
                         <TableCell className={classes.head}>Status</TableCell>
+                        <TableCell className={classes.head}>
+                          Order Date
+                        </TableCell>
                         <TableCell className={classes.head}>Actions</TableCell>
                       </TableRow>
                     </TableHead>
                     <TableBody>
-                      <TableRow>
-                        <TableCell className={classes.text}>FAD103</TableCell>
-                        <TableCell className={classes.text}>Amir DBT</TableCell>
-                        <TableCell className={classes.text}>#1000</TableCell>
-                        <TableCell className={classes.text}>
-                          {" "}
-                          <Chip
-                            variant="outlined"
-                            label="COMPLETED"
-                            color="#4caf50"
-                          />
-                        </TableCell>
-                        <TableCell className={classes.text}>
-                          <EditOrder />
-                        </TableCell>
-                      </TableRow>
-                      <TableRow>
-                        <TableCell className={classes.text}>FAD102</TableCell>
-                        <TableCell className={classes.text}>Ton Nta</TableCell>
-                        <TableCell className={classes.text}>#5000</TableCell>
-                        <TableCell className={classes.text}>
-                          {" "}
-                          <Chip
-                            variant="outlined"
-                            label="PENDING"
-                            color="#f57c00"
-                          />
-                        </TableCell>
-                        <TableCell className={classes.text}>
-                          <EditOrder />
-                        </TableCell>
-                      </TableRow>
-                      {/* {(rowsPerPage > 0
-                      ? filteredPatients.slice(
-                          page * rowsPerPage,
-                          page * rowsPerPage + rowsPerPage
-                        )
-                      : filteredPatients
-                    ).map((patient) => (
-                      <TableRow key={patient.id}>
-                        <TableCell>{patient.firstName}</TableCell>
-                        <TableCell>{patient.lastName}</TableCell>
-                        <TableCell>{patient.email}</TableCell>
-                        <TableCell>{patient.gender}</TableCell>
-                        <TableCell>{patient.userName}</TableCell>
-                        <TableCell>{patient.phoneNumber}</TableCell>
-                        <TableCell>
-                          <Link to={`/all-patients/${patient.userName}`}>
-                            <IconButton>
-                              <ArrowForward />
-                            </IconButton>
-                          </Link>
-                        </TableCell>
-                      </TableRow>
-                    ))} */}
+                      {(rowsPerPage > 0
+                        ? filteredOrders.slice(
+                            page * rowsPerPage,
+                            page * rowsPerPage + rowsPerPage
+                          )
+                        : filteredOrders
+                      ).map((order) => (
+                        <TableRow key={order.id}>
+                          <TableCell>{order.firstName}</TableCell>
+                          <TableCell>{order.userName}</TableCell>
+                          <TableCell>{order.category}</TableCell>
+                          <TableCell>{order.message}</TableCell>
+                          <TableCell>
+                            {" "}
+                            {moment(order.createdA).format("DD MMM, YYYY")}
+                          </TableCell>
+                          <TableCell>
+                            {" "}
+                            <EditOrder />
+                          </TableCell>
+                        </TableRow>
+                      ))}
 
                       {emptyRows > 0 && (
                         <TableRow style={{ height: 53 * emptyRows }}>
@@ -262,7 +239,7 @@ const Orders = () => {
                             { label: "All", value: -1 },
                           ]}
                           colSpan={3}
-                          count={filteredPatients.length}
+                          count={filteredOrders.length}
                           rowsPerPage={rowsPerPage}
                           page={page}
                           SelectProps={{
