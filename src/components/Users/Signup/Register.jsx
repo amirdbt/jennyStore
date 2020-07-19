@@ -49,7 +49,7 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-const Signup = () => {
+const Register = () => {
   const [err, setErr] = useState(false);
   const [message, setMessage] = useState("");
   const [loading, setLoading] = useState(false);
@@ -62,12 +62,11 @@ const Signup = () => {
   return (
     <Formik
       initialValues={{
-        storeName: "",
-        address: "",
-        location: "",
-        state: "",
+        fullName: "",
+        gender: "",
         email: "",
         password: "",
+        userName: "",
         phoneNumber: "",
       }}
       onSubmit={(values, { setSubmitting }) => {
@@ -75,12 +74,12 @@ const Signup = () => {
           console.log("Signing up", values);
           setLoading(true);
           axios
-            .post(`https://jenifa-stores.herokuapp.com/stores/signUp`, values)
+            .post(``, values)
             .then((res) => {
               console.log(res);
               localStorage.setItem("token", res.data.token);
-              localStorage.setItem("storeName", res.data.store.storeName);
-              localStorage.setItem("role", res.data.store.role);
+              //   localStorage.setItem("storeName", res.data.store.storeName);
+              //   localStorage.setItem("role", res.data.store.role);
               setLoading(false);
               history.push("/");
             })
@@ -94,13 +93,14 @@ const Signup = () => {
         }, 200);
       }}
       validationSchema={Yup.object().shape({
-        storeName: Yup.string()
+        fullName: Yup.string()
           .required("Required")
-          .min(2, "The first name can not be less than 2"),
-        address: Yup.string().required("Required"),
-        location: Yup.string().required("Required"),
-        state: Yup.string().required("Required"),
+          .min(2, "The full name can not be less than 2"),
+        gender: Yup.string().required("Required"),
         email: Yup.string().email("Invalid email").required("Required"),
+        userName: Yup.string()
+          .required("Required")
+          .min(3, "The user name can not be less than 3"),
         phoneNumber: Yup.string().required("Required"),
         password: Yup.string()
           .required("No password provided")
@@ -148,133 +148,31 @@ const Signup = () => {
                   <Grid container spacing={2}>
                     <Grid item xs={12} sm={12}>
                       <TextField
-                        name="storeName"
-                        label="Store Name *"
+                        name="fullName"
+                        label="Full Name *"
                         fullWidth
                         variant="outlined"
                         type="text"
                         error={err}
-                        value={values.storeName}
+                        value={values.fullName}
                         className={
-                          errors.storeName && touched.storeName && "error"
+                          errors.fullName && touched.fullName && "error"
                         }
                         onChange={handleChange}
                         onBlur={handleBlur}
                       />
-                      {errors.storeName && touched.storeName && (
-                        <div className={classes.error}>
-                          {" "}
-                          {errors.storeName}{" "}
-                        </div>
-                      )}
-                    </Grid>
-                    <Grid item xs={12}>
-                      <TextField
-                        name="address"
-                        label="Address *"
-                        fullWidth
-                        variant="outlined"
-                        type="text"
-                        multiline
-                        error={err}
-                        value={values.address}
-                        className={errors.address && touched.address && "error"}
-                        onChange={handleChange}
-                        onBlur={handleBlur}
-                      />
-                      {errors.address && touched.address && (
-                        <div className={classes.error}> {errors.address} </div>
-                      )}
-                    </Grid>
-                    <Grid item xs={12}>
-                      <TextField
-                        name="location"
-                        label="Location *"
-                        fullWidth
-                        variant="outlined"
-                        type="text"
-                        error={err}
-                        value={values.location}
-                        className={
-                          errors.location && touched.location && "error"
-                        }
-                        onChange={handleChange}
-                        onBlur={handleBlur}
-                      />
-                      {errors.location && touched.location && (
-                        <div className={classes.error}> {errors.location} </div>
-                      )}
-                    </Grid>
-                    <Grid item xs={12}>
-                      <FormControl fullWidth variant="outlined">
-                        <InputLabel id="demo-simple-select-outlined-label">
-                          State
-                        </InputLabel>
-                        <Select
-                          labelId="demo-simple-select-outlined-label"
-                          id="demo-simple-select-outlined"
-                          fullWidth
-                          label="state"
-                          name="state"
-                          error={err}
-                          value={values.state || ""}
-                          className={errors.state && touched.state && "error"}
-                          onChange={handleChange}
-                          onBlur={handleBlur}
-                        >
-                          <MenuItem value="">
-                            <em>None</em>
-                          </MenuItem>
-                          <MenuItem value="Abuja FCT">Abuja FCT</MenuItem>
-                          <MenuItem value="Abia">Abia</MenuItem>
-                          <MenuItem value="Adamawa">Adamawa</MenuItem>
-                          <MenuItem value="Akwa Ibom">Akwa Ibom</MenuItem>
-                          <MenuItem value="Anambra">Anambra</MenuItem>
-                          <MenuItem value="Bauchi">Bauchi</MenuItem>
-                          <MenuItem value="Bayelsa">Bayelsa</MenuItem>
-                          <MenuItem value="Benue">Benue</MenuItem>
-                          <MenuItem value="Borno">Borno</MenuItem>
-                          <MenuItem value="Cross River">Cross River</MenuItem>
-                          <MenuItem value="Delta">Delta</MenuItem>
-                          <MenuItem value="Ebonyi">Ebonyi</MenuItem>
-                          <MenuItem value="Edo">Edo</MenuItem>
-                          <MenuItem value="Ekiti">Ekiti</MenuItem>
-                          <MenuItem value="Enugu">Enugu</MenuItem>
-                          <MenuItem value="Gombe">Gombe</MenuItem>
-                          <MenuItem value="Imo">Imo</MenuItem>
-                          <MenuItem value="Jigawa">Jigawa</MenuItem>
-                          <MenuItem value="Kaduna">Kaduna</MenuItem>
-                          <MenuItem value="Kano">Kano</MenuItem>
-                          <MenuItem value="Katsina">Katsina</MenuItem>
-                          <MenuItem value="Kebbi">Kebbi</MenuItem>
-                          <MenuItem value="Kogi">Kogi</MenuItem>
-                          <MenuItem value="Kwara">Kwara</MenuItem>
-                          <MenuItem value="Lagos">Lagos</MenuItem>
-                          <MenuItem value="Nassarawa">Nassarawa</MenuItem>
-                          <MenuItem value="Niger">Niger</MenuItem>
-                          <MenuItem value="Ogun">Ogun</MenuItem>
-                          <MenuItem value="Ondo">Ondo</MenuItem>
-                          <MenuItem value="Osun">Osun</MenuItem>
-                          <MenuItem value="Oyo">Oyo</MenuItem>
-                          <MenuItem value="Plateau">Plateau</MenuItem>
-                          <MenuItem value="Rivers">Rivers</MenuItem>
-                          <MenuItem value="Sokoto">Sokoto</MenuItem>
-                          <MenuItem value="Taraba">Taraba</MenuItem>
-                          <MenuItem value="Yobe">Yobe</MenuItem>
-                          <MenuItem value="Zamfara">Zamfara</MenuItem>
-                        </Select>
-                      </FormControl>
-                      {errors.state && touched.state && (
-                        <div className={classes.error}> {errors.state} </div>
+                      {errors.fullName && touched.fullName && (
+                        <div className={classes.error}> {errors.fullName} </div>
                       )}
                     </Grid>
                     <Grid item xs={12}>
                       <TextField
                         name="email"
-                        label="Email Address *"
+                        label="Email *"
                         fullWidth
                         variant="outlined"
                         type="email"
+                        multiline
                         error={err}
                         value={values.email}
                         className={errors.email && touched.email && "error"}
@@ -283,6 +181,54 @@ const Signup = () => {
                       />
                       {errors.email && touched.email && (
                         <div className={classes.error}> {errors.email} </div>
+                      )}
+                    </Grid>
+                    <Grid item xs={12}>
+                      <FormControl fullWidth variant="outlined">
+                        <InputLabel id="demo-simple-select-outlined-label">
+                          Gender
+                        </InputLabel>
+                        <Select
+                          labelId="demo-simple-select-outlined-label"
+                          id="demo-simple-select-outlined"
+                          fullWidth
+                          label="gender"
+                          name="gender"
+                          error={err}
+                          value={values.gender || ""}
+                          className={errors.gender && touched.gender && "error"}
+                          onChange={handleChange}
+                          onBlur={handleBlur}
+                        >
+                          <MenuItem value="">
+                            <em>None</em>
+                          </MenuItem>
+                          <MenuItem value="Male">Male</MenuItem>
+                          <MenuItem value="Female">Female</MenuItem>
+                        </Select>
+                      </FormControl>
+                      {errors.gender && touched.gender && (
+                        <div className={classes.error}> {errors.gender} </div>
+                      )}
+                    </Grid>
+
+                    <Grid item xs={12}>
+                      <TextField
+                        name="userName"
+                        label="Username *"
+                        fullWidth
+                        variant="outlined"
+                        type="text"
+                        error={err}
+                        value={values.userName}
+                        className={
+                          errors.userName && touched.userName && "error"
+                        }
+                        onChange={handleChange}
+                        onBlur={handleBlur}
+                      />
+                      {errors.userName && touched.userName && (
+                        <div className={classes.error}> {errors.userName} </div>
                       )}
                     </Grid>
                     <Grid item xs={12}>
@@ -366,7 +312,7 @@ const Signup = () => {
                   <Grid container>
                     <Grid item xs>
                       <Link
-                        href="/signin"
+                        href="/login"
                         variant="body2"
                         style={{ fontSize: 17, color: "#9e9e9e" }}
                       >
@@ -375,11 +321,11 @@ const Signup = () => {
                     </Grid>
                     <Grid item xs>
                       <Link
-                        href="/register"
+                        href="/signup"
                         variant="body2"
                         style={{ fontSize: 17, color: "#9e9e9e" }}
                       >
-                        User? Register
+                        Store? Register
                       </Link>
                     </Grid>
                   </Grid>
@@ -393,4 +339,4 @@ const Signup = () => {
     </Formik>
   );
 };
-export default Signup;
+export default Register;
