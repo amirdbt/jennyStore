@@ -95,6 +95,12 @@ const useStyles = makeStyles((theme) => ({
     paddingLeft: theme.spacing(4),
     marginLeft: theme.spacing(5),
   },
+  powerIcon: {
+    color: "#fff",
+    [theme.breakpoints.down("sm")]: {
+      color: "#000",
+    },
+  },
 }));
 
 const Sidebar = (props) => {
@@ -235,7 +241,7 @@ const Sidebar = (props) => {
               color="inherit"
               onClick={handleMenu}
             >
-              <PowerSettingsNew style={{ color: "#fff" }} />
+              <PowerSettingsNew className={classes.powerIcon} />
             </IconButton>
             <Menu
               open={open}
