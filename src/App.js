@@ -9,13 +9,15 @@ import Dashboard from "./components/Dashboard/Dashboard";
 import { Switch, Route, withRouter } from "react-router-dom";
 import AuthGuard from "./components/Utility/AuthGuard";
 import Register from "./components/Users/Signup/Register";
+import Login from "./components/Users/Signin/Login";
 
 const Main = withRouter(({ location }) => {
   return (
     <>
       {location.pathname !== "/signin" &&
         location.pathname !== "/signup" &&
-        location.pathname !== "/register" && (
+        location.pathname !== "/register" &&
+        location.pathname !== "/login" && (
           <>
             <Sidebar />
           </>
@@ -25,6 +27,7 @@ const Main = withRouter(({ location }) => {
         <Route path="/signin" component={Signin} />
         <Route path="/signup" component={Signup} />
         <Route path="/register" component={Register} />
+        <Route path="/login" component={Login} />
 
         <AuthGuard path="/products" component={Products} />
         <AuthGuard path="/create" component={CreateProduct} />

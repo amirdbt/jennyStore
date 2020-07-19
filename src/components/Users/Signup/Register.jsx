@@ -140,7 +140,7 @@ const Register = () => {
                     variant="subtitle1"
                     style={{ fontSize: 20, fontWeight: 300 }}
                   >
-                    Sign up now
+                    Sign up now as a User
                   </Typography>
                 </div>
 

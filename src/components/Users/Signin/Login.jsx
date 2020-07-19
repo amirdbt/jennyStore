@@ -45,7 +45,7 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-const Signin = () => {
+const Login = () => {
   const [err, setErr] = useState(false);
   const [message, setMessage] = useState("");
   const [loading, setLoading] = useState(false);
@@ -58,20 +58,20 @@ const Signin = () => {
   return (
     <Formik
       initialValues={{
-        storeName: "",
+        userName: "",
         password: "",
       }}
       onSubmit={(values, { setSubmitting }) => {
         setTimeout(() => {
-          console.log("Signing in", values);
+          console.log("Loging in", values);
           setLoading(true);
           axios
-            .post(`https://jenifa-stores.herokuapp.com/stores/login`, values)
+            .post(``, values)
             .then((res) => {
               console.log(res);
-              localStorage.setItem("token", res.data.storeToken);
-              localStorage.setItem("storeName", res.data.store.storeName);
-              localStorage.setItem("role", res.data.store.role);
+              //   localStorage.setItem("token", res.data.storeToken);
+              //   localStorage.setItem("storeName", res.data.store.storeName);
+              //   localStorage.setItem("role", res.data.store.role);
 
               setLoading(false);
               history.push("/");
@@ -87,7 +87,7 @@ const Signin = () => {
         }, 200);
       }}
       validationSchema={Yup.object().shape({
-        storeName: Yup.string().required("Required"),
+        userName: Yup.string().required("Required"),
         password: Yup.string()
           .required("No password provided")
           .min(8)
@@ -130,7 +130,7 @@ const Signin = () => {
                       textAlign: "center",
                     }}
                   >
-                    Sign in as a Store
+                    Sign in as a User
                   </Typography>
                 </div>
 
@@ -138,24 +138,21 @@ const Signin = () => {
                   <Grid container spacing={2}>
                     <Grid item xs={12}>
                       <TextField
-                        name="storeName"
-                        label="Store Name *"
+                        name="userName"
+                        label="User Name *"
                         fullWidth
                         variant="outlined"
                         type="text"
                         error={err}
-                        value={values.storeName}
+                        value={values.userName}
                         className={
-                          errors.storeName && touched.storeName && "error"
+                          errors.userName && touched.userName && "error"
                         }
                         onChange={handleChange}
                         onBlur={handleBlur}
                       />
-                      {errors.storeName && touched.storeName && (
-                        <div className={classes.error}>
-                          {" "}
-                          {errors.storeName}{" "}
-                        </div>
+                      {errors.userName && touched.userName && (
+                        <div className={classes.error}> {errors.userName} </div>
                       )}
                     </Grid>
                     <Grid item xs={12}>
@@ -218,7 +215,7 @@ const Signin = () => {
                   <Grid container>
                     <Grid item xs>
                       <Link
-                        href="/signup"
+                        href="/register"
                         variant="body2"
                         style={{ fontSize: 18, color: "#9e9e9e" }}
                       >
@@ -227,11 +224,11 @@ const Signin = () => {
                     </Grid>
                     <Grid item xs>
                       <Link
-                        href="/login"
+                        href="/signin"
                         variant="body2"
                         style={{ fontSize: 18, color: "#9e9e9e" }}
                       >
-                        User? Login
+                        Store? Login
                       </Link>
                     </Grid>
                   </Grid>
@@ -245,4 +242,4 @@ const Signin = () => {
     </Formik>
   );
 };
-export default Signin;
+export default Login;
