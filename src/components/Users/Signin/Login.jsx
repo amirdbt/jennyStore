@@ -66,20 +66,24 @@ const Login = () => {
           console.log("Loging in", values);
           setLoading(true);
           axios
-            .post(``, values)
+            .post(
+              `https://jenifa-stores.herokuapp.com/users/login
+            `,
+              values
+            )
             .then((res) => {
               console.log(res);
-              //   localStorage.setItem("token", res.data.storeToken);
-              //   localStorage.setItem("storeName", res.data.store.storeName);
-              //   localStorage.setItem("role", res.data.store.role);
+              localStorage.setItem("token", res.data.userToken);
+              localStorage.setItem("storeName", res.data.User.userName);
+              localStorage.setItem("role", res.data.User.role);
 
               setLoading(false);
               history.push("/");
             })
             .catch((err) => {
-              console.log(err);
+              console.log(err.response);
 
-              setMessage(err.response.data.message);
+              setMessage(err.response.data);
               setErr(true);
               setLoading(false);
             });
