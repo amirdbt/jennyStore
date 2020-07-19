@@ -74,12 +74,16 @@ const Register = () => {
           console.log("Signing up", values);
           setLoading(true);
           axios
-            .post(``, values)
+            .post(
+              `https://jenifa-stores.herokuapp.com/users/signUp
+            `,
+              values
+            )
             .then((res) => {
               console.log(res);
               localStorage.setItem("token", res.data.token);
-              //   localStorage.setItem("storeName", res.data.store.storeName);
-              //   localStorage.setItem("role", res.data.store.role);
+              localStorage.setItem("userName", res.data.user.userName);
+              localStorage.setItem("role", res.data.user.role);
               setLoading(false);
               history.push("/");
             })
