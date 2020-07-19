@@ -15,7 +15,7 @@ import {
   Button,
 } from "@material-ui/core";
 import { Delete } from "@material-ui/icons";
-// import EditProfile from "./EditProfile";
+import EditProfile from "./EditProfile";
 import axios from "axios";
 import moment from "moment";
 import { Alert, AlertTitle } from "@material-ui/lab";
@@ -160,7 +160,9 @@ const Profile = () => {
 
                   <div style={{ marginBottom: "20px" }}></div>
                   <Grid container spacing={3}>
-                    <Grid item>{/* <EditProfile user={user} /> */}</Grid>
+                    <Grid item>
+                      <EditProfile user={user} />
+                    </Grid>
                     <Grid item>
                       <Button
                         variant="contained"
