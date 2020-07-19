@@ -78,7 +78,7 @@ const Login = () => {
               localStorage.setItem("role", res.data.User.role);
 
               setLoading(false);
-              history.push("/");
+              history.push("/home");
             })
             .catch((err) => {
               console.log(err.response);

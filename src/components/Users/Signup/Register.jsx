@@ -85,7 +85,7 @@ const Register = () => {
               localStorage.setItem("userName", res.data.user.userName);
               localStorage.setItem("role", res.data.user.role);
               setLoading(false);
-              history.push("/");
+              history.push("/home");
             })
             .catch((err) => {
               console.log(err.response.data.error);

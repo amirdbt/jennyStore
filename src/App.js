@@ -10,6 +10,8 @@ import { Switch, Route, withRouter } from "react-router-dom";
 import AuthGuard from "./components/Utility/AuthGuard";
 import Register from "./components/Users/Signup/Register";
 import Login from "./components/Users/Signin/Login";
+import Home from "./components/Users/Home/Home";
+import Profile from "./components/Users/Profile/Profile";
 
 const Main = withRouter(({ location }) => {
   return (
@@ -17,7 +19,8 @@ const Main = withRouter(({ location }) => {
       {location.pathname !== "/signin" &&
         location.pathname !== "/signup" &&
         location.pathname !== "/register" &&
-        location.pathname !== "/login" && (
+        location.pathname !== "/login" &&
+        location.pathname !== "/home" && (
           <>
             <Sidebar />
           </>
@@ -29,9 +32,12 @@ const Main = withRouter(({ location }) => {
         <Route path="/register" component={Register} />
         <Route path="/login" component={Login} />
 
+        <AuthGuard path="/home" component={Home} />
         <AuthGuard path="/products" component={Products} />
         <AuthGuard path="/create" component={CreateProduct} />
         <AuthGuard path="/orders" component={Orders} />
+
+        <AuthGuard path="/profile" component={Profile} />
       </Switch>
     </>
   );

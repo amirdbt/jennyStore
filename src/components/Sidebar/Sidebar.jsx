@@ -20,12 +20,11 @@ import {
 import {
   Dashboard,
   PowerSettingsNew,
-  People,
   ShoppingCart,
   Folder,
   ExpandLess,
   ExpandMore,
-  Category,
+  AccountCircle,
 } from "@material-ui/icons";
 import MenuIcon from "@material-ui/icons/Menu";
 
@@ -108,6 +107,8 @@ const Sidebar = (props) => {
   const classes = useStyles();
   let history = useHistory();
 
+  const role = localStorage.getItem("role");
+
   const handleClick = () => {
     setOp(!op);
   };
@@ -137,51 +138,71 @@ const Sidebar = (props) => {
 
       <Divider />
       <List>
-        <Link className={classes.link} to="/">
-          <ListItem button className={classes.listItems}>
-            <ListItemIcon className={classes.iconColor}>
-              <Dashboard />
-            </ListItemIcon>
-            <Typography variant="h5">Dashboard</Typography>
-          </ListItem>
-        </Link>
-
-        <ListItem button className={classes.listItems} onClick={handleClick}>
-          <ListItemIcon className={classes.iconColor}>
-            <ShoppingCart />
-          </ListItemIcon>
-          <Typography variant="h5" style={{ marginRight: 80 }}>
-            Products
-          </Typography>
-          {op ? <ExpandLess /> : <ExpandMore />}
-        </ListItem>
-        <Collapse in={op} timeout="auto" unmountOnExit>
-          <List component="div" disablePadding>
-            <Link to="/products" className={classes.link}>
-              <ListItem button className={classes.nested}>
-                <Typography variant="h6" style={{ fontWeight: 400 }}>
-                  List Products
-                </Typography>
+        {role === "store" && (
+          <>
+            <Link className={classes.link} to="/">
+              <ListItem button className={classes.listItems}>
+                <ListItemIcon className={classes.iconColor}>
+                  <Dashboard />
+                </ListItemIcon>
+                <Typography variant="h5">Dashboard</Typography>
               </ListItem>
             </Link>
-            <Link to="/create" className={classes.link}>
-              <ListItem button className={classes.nested}>
-                <Typography variant="h6" style={{ fontWeight: 400 }}>
-                  Create Products
-                </Typography>
+            <ListItem
+              button
+              className={classes.listItems}
+              onClick={handleClick}
+            >
+              <ListItemIcon className={classes.iconColor}>
+                <ShoppingCart />
+              </ListItemIcon>
+              <Typography variant="h5" style={{ marginRight: 80 }}>
+                Products
+              </Typography>
+              {op ? <ExpandLess /> : <ExpandMore />}
+            </ListItem>
+            <Collapse in={op} timeout="auto" unmountOnExit>
+              <List component="div" disablePadding>
+                <Link to="/products" className={classes.link}>
+                  <ListItem button className={classes.nested}>
+                    <Typography variant="h6" style={{ fontWeight: 400 }}>
+                      List Products
+                    </Typography>
+                  </ListItem>
+                </Link>
+                <Link to="/create" className={classes.link}>
+                  <ListItem button className={classes.nested}>
+                    <Typography variant="h6" style={{ fontWeight: 400 }}>
+                      Create Products
+                    </Typography>
+                  </ListItem>
+                </Link>
+              </List>
+            </Collapse>
+
+            <Link className={classes.link} to="/orders">
+              <ListItem button className={classes.listItems}>
+                <ListItemIcon className={classes.iconColor}>
+                  <Folder />
+                </ListItemIcon>
+                <Typography variant="h5">Orders</Typography>
               </ListItem>
             </Link>
-          </List>
-        </Collapse>
+          </>
+        )}
 
-        <Link className={classes.link} to="/orders">
-          <ListItem button className={classes.listItems}>
-            <ListItemIcon className={classes.iconColor}>
-              <Folder />
-            </ListItemIcon>
-            <Typography variant="h5">Orders</Typography>
-          </ListItem>
-        </Link>
+        {role === "user" && (
+          <>
+            <Link className={classes.link} to="/profile">
+              <ListItem button className={classes.listItems}>
+                <ListItemIcon className={classes.iconColor}>
+                  <AccountCircle />
+                </ListItemIcon>
+                <Typography variant="h5">Profile</Typography>
+              </ListItem>
+            </Link>
+          </>
+        )}
       </List>
     </>
   );
@@ -225,9 +246,11 @@ const Sidebar = (props) => {
               transformOrigin={{ vertical: "top", horizontal: "right" }}
               elevation={0}
             >
-              <Link to="#" className={classes.link1}>
-                <MenuItem onClick={handleClose}>Profile</MenuItem>
-              </Link>
+              {role === "user" && (
+                <Link to="/home" className={classes.link1}>
+                  <MenuItem onClick={handleClose}>Home</MenuItem>
+                </Link>
+              )}
 
               <Link to="/signin" className={classes.link1}>
                 <MenuItem onClick={logout}>Log out</MenuItem>
