@@ -104,14 +104,14 @@ const EditProfile = ({ user }) => {
         }, 200);
       }}
       validationSchema={Yup.object().shape({
-        firstName: Yup.string()
+        fullName: Yup.string()
           .required("Required")
-          .min(2, "The full name can not be less than 2"),
+          .min(2, "The first name can not be less than 2"),
 
         gender: Yup.string().required("Required"),
         email: Yup.string().email("Invalid email").required("Required"),
-        phoneNumber: Yup.string().required("Required"),
 
+        phoneNumber: Yup.string().required("Required"),
         phone_number_two: Yup.string().nullable(),
       })}
     >
@@ -170,7 +170,7 @@ const EditProfile = ({ user }) => {
                     <div>
                       <TextField
                         name="fullName"
-                        label="Full name"
+                        label="First name"
                         variant="outlined"
                         fullWidth
                         type="text"
@@ -188,24 +188,7 @@ const EditProfile = ({ user }) => {
                         <div className={classes.error}> {errors.fullName} </div>
                       )}
                     </div>
-                    <div>
-                      <TextField
-                        name="email"
-                        label="Email"
-                        variant="outlined"
-                        fullWidth
-                        type="text"
-                        error={err}
-                        value={values.email || ""}
-                        className={errors.email && touched.email && "error"}
-                        onChange={handleChange}
-                        onBlur={handleBlur}
-                        style={{ marginBottom: "20px" }}
-                      />
-                      {errors.email && touched.email && (
-                        <div className={classes.error}> {errors.email} </div>
-                      )}
-                    </div>
+
                     <FormControl
                       fullWidth
                       variant="outlined"
@@ -236,6 +219,24 @@ const EditProfile = ({ user }) => {
                         <div className={classes.error}> {errors.gender} </div>
                       )}
                     </FormControl>
+                    <div>
+                      <TextField
+                        name="email"
+                        label="Email Address"
+                        fullWidth
+                        variant="outlined"
+                        type="email"
+                        error={err}
+                        value={values.email || ""}
+                        className={errors.email && touched.email && "error"}
+                        onChange={handleChange}
+                        onBlur={handleBlur}
+                        style={{ marginBottom: "20px" }}
+                      />
+                      {errors.email && touched.email && (
+                        <div className={classes.error}> {errors.email} </div>
+                      )}
+                    </div>
 
                     <div>
                       <TextField
@@ -262,7 +263,7 @@ const EditProfile = ({ user }) => {
                     <div>
                       <TextField
                         name="phone_number_two"
-                        label="Phone Number"
+                        label="Phone Number 2"
                         fullWidth
                         type="text"
                         variant="outlined"
