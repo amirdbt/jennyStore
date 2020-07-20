@@ -18,11 +18,13 @@ import {
   Typography,
   Button,
   Chip,
+  Backdrop,
 } from "@material-ui/core";
 
 import { Link } from "react-router-dom";
 import axios from "axios";
 import SearchBox from "../../Utility/SearchBox";
+import { Alert } from "@material-ui/lab";
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -46,13 +48,45 @@ const useStyles = makeStyles((theme) => ({
     display: "flex",
     flexWrap: "wrap",
   },
+  backdrop: {
+    zIndex: theme.zIndex.drawer + 1,
+    color: "#fff",
+  },
 }));
 
 const Products = ({ products, productLength }) => {
   const classes = useStyles();
   const [loading, setLoading] = useState(false);
-
+  const [loading2, setLoading2] = useState(false);
+  const token = localStorage.getItem("token");
   const [searchField, setSearchField] = useState("");
+  const [message, setMessage] = useState("");
+  const [al, setAl] = useState(false);
+  const [severity, setSeverity] = useState("success");
+
+  const book = (storeId, productId, category) => {
+    setLoading2(true);
+    axios
+      .post(
+        `https://jenifa-stores.herokuapp.com/bookings/new
+      `,
+        { storeId, productId, category },
+        { headers: { Authorization: `${token}` } }
+      )
+      .then((res) => {
+        console.log(res);
+        setMessage("Booking successfully done");
+        setAl(true);
+        setLoading2(false);
+      })
+      .catch((error) => {
+        console.log(error);
+        setMessage("Booking unsuccessful");
+        setAl(true);
+        setSeverity("error");
+        setLoading2(false);
+      });
+  };
 
   const searchChange = (e) => {
     setSearchField(e.target.value);
@@ -66,6 +100,10 @@ const Products = ({ products, productLength }) => {
         <CircularProgress style={{ marginLeft: "50%" }} />
       ) : filteredProducts.length ? (
         <>
+          {al ? <Alert severity={severity}>{message}</Alert> : <div></div>}
+          <Backdrop className={classes.backdrop} open={loading2}>
+            <CircularProgress color="inherit" />
+          </Backdrop>
           <Grid container spacing={6}>
             <Grid item xs={12} sm={6}>
               <Card elevation={0}>
@@ -139,6 +177,14 @@ const Products = ({ products, productLength }) => {
                 <Button
                   variant="contained"
                   style={{ backgroundColor: "#2196f3" }}
+                  onClick={() => {
+                    if (
+                      window.confirm(
+                        "Are you sure you want to book this product?"
+                      )
+                    )
+                      book(products.storeId, products._id, products.category);
+                  }}
                 >
                   Book
                 </Button>
