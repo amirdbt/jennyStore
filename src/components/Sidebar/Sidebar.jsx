@@ -25,6 +25,7 @@ import {
   ExpandLess,
   ExpandMore,
   AccountCircle,
+  Bookmarks,
 } from "@material-ui/icons";
 import MenuIcon from "@material-ui/icons/Menu";
 
@@ -205,6 +206,14 @@ const Sidebar = (props) => {
                   <AccountCircle />
                 </ListItemIcon>
                 <Typography variant="h5">Profile</Typography>
+              </ListItem>
+            </Link>
+            <Link className={classes.link} to="/bookings">
+              <ListItem button className={classes.listItems}>
+                <ListItemIcon className={classes.iconColor}>
+                  <Bookmarks />
+                </ListItemIcon>
+                <Typography variant="h5">Bookings</Typography>
               </ListItem>
             </Link>
           </>

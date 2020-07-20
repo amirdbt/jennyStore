@@ -12,6 +12,7 @@ import Register from "./components/Users/Signup/Register";
 import Login from "./components/Users/Signin/Login";
 import Home from "./components/Users/Home/Home";
 import Profile from "./components/Users/Profile/Profile";
+import Bookings from "./components/Users/Bookings/Bookings";
 
 const Main = withRouter(({ location }) => {
   return (
@@ -38,6 +39,7 @@ const Main = withRouter(({ location }) => {
         <AuthGuard path="/orders" component={Orders} />
 
         <AuthGuard path="/profile" component={Profile} />
+        <AuthGuard path="/bookings" component={Bookings} />
       </Switch>
     </>
   );
