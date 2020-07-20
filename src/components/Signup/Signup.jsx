@@ -58,7 +58,56 @@ const Signup = () => {
   const handleMouseDownPassword = () => setShowPassword(!showPassword);
   let history = useHistory();
   const classes = useStyles();
-
+  const locations = [
+    "Apo",
+    "Apo resettlement",
+    "Apo-Dutse",
+    "Asokoro",
+    "Central Area",
+    "Dakibiyu",
+    "Dawaki",
+    "Duboyi",
+    "Durumi",
+    "Gaduwa",
+    "Galadimawa",
+    "Garki",
+    "Gudu",
+    "Guzape",
+    "Gwagwalada",
+    "Gwarinpa",
+    "Idu",
+    "Industrial Area",
+    "Jabi",
+    "Jahi",
+    "Kabusa",
+    "Kado",
+    "Kafe",
+    "Karmo",
+    "Karu",
+    "Katampe",
+    "Kaura",
+    "Kubwa",
+    "Kuje",
+    "Kukwaba",
+    "Kyami",
+    "Life Camp",
+    "Lokogoma",
+    "Lugbe",
+    "Mabushi",
+    "Maitama",
+    "Mpape",
+    "Nbora",
+    "Nyanya",
+    "Utako",
+    "Wuse 1",
+    "Wuse 2",
+    "Wuse Zone 2",
+    "Wuse Zone 3",
+    "Wuse Zone 4",
+    "Wuse Zone 5",
+    "Wuse Zone 7",
+    "Wuye",
+  ];
   return (
     <Formik
       initialValues={{
@@ -187,20 +236,32 @@ const Signup = () => {
                       )}
                     </Grid>
                     <Grid item xs={12}>
-                      <TextField
-                        name="location"
-                        label="Location *"
-                        fullWidth
-                        variant="outlined"
-                        type="text"
-                        error={err}
-                        value={values.location}
-                        className={
-                          errors.location && touched.location && "error"
-                        }
-                        onChange={handleChange}
-                        onBlur={handleBlur}
-                      />
+                      <FormControl fullWidth variant="outlined">
+                        <InputLabel id="demo-simple-select-outlined-label">
+                          Location
+                        </InputLabel>
+                        <Select
+                          labelId="demo-simple-select-outlined-label"
+                          id="demo-simple-select-outlined"
+                          fullWidth
+                          label="location"
+                          name="location"
+                          error={err}
+                          value={values.location || ""}
+                          className={
+                            errors.location && touched.location && "error"
+                          }
+                          onChange={handleChange}
+                          onBlur={handleBlur}
+                        >
+                          <MenuItem value="">
+                            <em>None</em>
+                          </MenuItem>
+                          {locations.map((location) => (
+                            <MenuItem value={location}>{location}</MenuItem>
+                          ))}
+                        </Select>
+                      </FormControl>
                       {errors.location && touched.location && (
                         <div className={classes.error}> {errors.location} </div>
                       )}
