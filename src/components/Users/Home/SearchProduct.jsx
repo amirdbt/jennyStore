@@ -17,6 +17,8 @@ import {
   InputLabel,
   Select,
   MenuItem,
+  Backdrop,
+  CircularProgress,
 } from "@material-ui/core";
 import { useHistory } from "react-router-dom";
 import { Search, Map } from "@material-ui/icons";
@@ -24,6 +26,7 @@ import { Alert } from "@material-ui/lab";
 import { Formik } from "formik";
 import * as Yup from "yup";
 import axios from "axios";
+import Products from "./Products";
 
 const useStyles = makeStyles((theme) => ({
   paper: {
@@ -54,13 +57,19 @@ const useStyles = makeStyles((theme) => ({
       fontSize: 20,
     },
   },
+  backdrop: {
+    zIndex: theme.zIndex.drawer + 1,
+    color: "#fff",
+  },
 }));
 
 const SearchProduct = () => {
   const [err, setErr] = useState(false);
   const [message, setMessage] = useState("");
   const [loading, setLoading] = useState(false);
-
+  const [products, setProducts] = useState([]);
+  const [productLength, setProductLength] = useState("");
+  const token = localStorage.getItem("token");
   let history = useHistory();
   const classes = useStyles();
 
@@ -117,7 +126,7 @@ const SearchProduct = () => {
   return (
     <Formik
       initialValues={{
-        product_name: "",
+        name: "",
         location: "",
         state: "",
       }}
@@ -126,16 +135,24 @@ const SearchProduct = () => {
           console.log("Searching Product in", values);
           setLoading(true);
           axios
-            .post(``, values)
+            .post(
+              `https://jenifa-stores.herokuapp.com/users/search/product`,
+              values,
+              {
+                headers: { Authorization: `${token}` },
+              }
+            )
             .then((res) => {
               console.log(res);
+              setProducts(res.data.products);
+              setProductLength(res.data.productsLength);
               setLoading(false);
               //   history.push("/home");
             })
             .catch((err) => {
               console.log(err.response);
 
-              setMessage(err.response.data);
+              // setMessage(err.response.data);
               setErr(true);
               setLoading(false);
             });
@@ -143,7 +160,7 @@ const SearchProduct = () => {
         }, 200);
       }}
       validationSchema={Yup.object().shape({
-        product_name: Yup.string().required("Product name is required"),
+        name: Yup.string().required("Product name is required"),
         location: Yup.string().required("Location is neeeded"),
         state: Yup.string().required("State is required"),
       })}
@@ -163,6 +180,11 @@ const SearchProduct = () => {
             <Container component={Card} maxWidth="xl" elevation={1}>
               <CssBaseline />
               {err ? <Alert severity="error">{message}</Alert> : <div></div>}
+              {productLength === 0 ? (
+                <Alert severity="info">No Product</Alert>
+              ) : (
+                <div></div>
+              )}
               <div className={classes.paper}>
                 <div className={classes.display}>
                   <Typography
@@ -179,16 +201,14 @@ const SearchProduct = () => {
                   <Grid container spacing={2}>
                     <Grid item xs={12}>
                       <TextField
-                        name="product_name"
+                        name="name"
                         label="Product name..."
                         fullWidth
                         type="text"
                         variant="outlined"
                         error={err}
-                        className={
-                          errors.product_name && touched.product_name && "error"
-                        }
-                        value={values.product_name}
+                        className={errors.name && touched.name && "error"}
+                        value={values.name}
                         onChange={handleChange}
                         onBlur={handleBlur}
                         InputProps={{
@@ -200,11 +220,8 @@ const SearchProduct = () => {
                           ),
                         }}
                       />
-                      {errors.product_name && touched.product_name && (
-                        <div className={classes.error}>
-                          {" "}
-                          {errors.product_name}{" "}
-                        </div>
+                      {errors.name && touched.name && (
+                        <div className={classes.error}> {errors.name} </div>
                       )}
                     </Grid>
                     <Grid item xs={12}>
@@ -238,7 +255,7 @@ const SearchProduct = () => {
                             <em>None</em>
                           </MenuItem>
                           {locations.map((location) => (
-                            <MenuItem value="location">{location}</MenuItem>
+                            <MenuItem value={location}>{location}</MenuItem>
                           ))}
                         </Select>
                       </FormControl>
@@ -321,16 +338,18 @@ const SearchProduct = () => {
                   >
                     Search Product
                   </Button>
-                  {loading && (
-                    <LinearProgress
-                      variant="query"
-                      style={{ marginTop: "10px" }}
-                    />
-                  )}
+                  <Backdrop className={classes.backdrop} open={loading}>
+                    <CircularProgress color="inherit" />
+                  </Backdrop>
 
                   <div style={{ marginBottom: "20px" }}></div>
                 </form>
               </div>
+              <div style={{ marginBottom: "20px" }}></div>
+            </Container>
+            <Container component={Card} maxWidth="xl" elevation={1}>
+              <Products products={products} productLength={productLength} />
+              <div style={{ marginBottom: "40px" }}></div>
             </Container>
           </>
         );
