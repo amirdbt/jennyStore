@@ -74,7 +74,7 @@ const Login = () => {
             .then((res) => {
               console.log(res);
               localStorage.setItem("token", res.data.userToken);
-              localStorage.setItem("storeName", res.data.User.userName);
+              localStorage.setItem("userName", res.data.User.userName);
               localStorage.setItem("role", res.data.User.role);
 
               setLoading(false);

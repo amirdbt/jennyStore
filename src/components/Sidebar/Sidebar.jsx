@@ -47,10 +47,11 @@ const useStyles = makeStyles((theme) => ({
     // color: "#000",
   },
   header: {
-    fontSize: "22px",
+    fontSize: "35px",
     textAlign: "center",
-    lineHeight: "200px",
+    lineHeight: "62px",
     userSelect: "none",
+    fontWeight: 500,
     // backgroundColor: "#18227c",
   },
   listItems: {
@@ -115,6 +116,8 @@ const Sidebar = (props) => {
   let history = useHistory();
 
   const role = localStorage.getItem("role");
+  const storeName = localStorage.getItem("storeName");
+  const userName = localStorage.getItem("userName");
 
   const handleClick = () => {
     setOp(!op);
@@ -141,7 +144,9 @@ const Sidebar = (props) => {
   const drawer = (
     <>
       <div className={classes.toolbar} />
-      <header className={classes.header}>Store Name</header>
+      <header className={classes.header}>
+        {role === "store" ? storeName : userName}
+      </header>
 
       <Divider />
       <List>

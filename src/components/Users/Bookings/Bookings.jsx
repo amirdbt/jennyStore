@@ -17,27 +17,23 @@ import {
   Grid,
   Card,
   Chip,
-  TextField,
-  MenuItem,
   Typography,
   Button,
+  Snackbar,
+  Slide,
 } from "@material-ui/core";
 import {
-  AccountCircle,
-  ArrowForward,
   FirstPage,
   KeyboardArrowLeft,
   KeyboardArrowRight,
   LastPage,
-  Image,
-  AddCircle,
   Delete,
 } from "@material-ui/icons";
-import { Link } from "react-router-dom";
 import moment from "moment";
 import axios from "axios";
 import SearchBox from "../../Utility/SearchBox";
 import EditMessage from "./Edit";
+import { Alert, AlertTitle } from "@material-ui/lab";
 
 const useStyles = makeStyles((theme) => ({
   head: {
@@ -130,6 +126,12 @@ const Bookings = () => {
   const [page, setPage] = React.useState(0);
   const [rowsPerPage, setRowsPerPage] = React.useState(5);
 
+  const [al, setAl] = useState(false);
+  const [err, setErr] = useState(false);
+  const [message, setMessage] = useState("");
+  const [severity, setSeverity] = useState("success");
+  const [open, setOpen] = useState(false);
+
   const [searchField, setSearchField] = useState("");
 
   const emptyRows =
@@ -138,7 +140,9 @@ const Bookings = () => {
   const handleChangePage = (event, newPage) => {
     setPage(newPage);
   };
-
+  const handleClose = () => {
+    setOpen(false);
+  };
   const handleChangeRowsPerPage = (event) => {
     setRowsPerPage(parseInt(event.target.value, 10));
     setPage(0);
@@ -173,12 +177,80 @@ const Bookings = () => {
   const filteredOrders = orders.filter((order) => {
     return order.product_name.toLowerCase().includes(searchField.toLowerCase());
   });
+  const checkStatus = (status) => {
+    if (status === "pending") {
+      return (
+        <Chip variant="default" label="PENDING" style={{ color: "#ff9800" }} />
+      );
+    } else if (status === "confirmed") {
+      return (
+        <Chip
+          variant="default"
+          label="CONFIRMED"
+          style={{ color: "#4caf50" }}
+        />
+      );
+    } else {
+      return (
+        <Chip variant="default" label="REJECTED" style={{ color: "#e53935" }} />
+      );
+    }
+  };
+
+  const deleteBooking = (bookings) => {
+    axios
+      .delete(
+        `https://jenifa-stores.herokuapp.com/bookings/${bookings}
+        `,
+
+        {
+          headers: { Authorization: `${token}` },
+        }
+      )
+      .then((res) => {
+        console.log(res);
+        console.log(res);
+        setMessage("Booking deleted successfully");
+        setAl(true);
+        setTimeout(() => {
+          window.location.reload(false);
+        }, 1000);
+      })
+      .catch((error) => {
+        console.log(error);
+        setMessage("Booking could not be deleted, try again");
+        setErr(true);
+        setAl(true);
+        setSeverity("error");
+        setTimeout(() => {
+          window.location.reload(false);
+        }, 1000);
+      });
+  };
   return (
     <div className="content">
       {loading ? (
         <CircularProgress style={{ marginLeft: "50%" }} />
       ) : (
         <>
+          {al ? (
+            <>
+              <Alert severity={severity}>
+                <AlertTitle>{severity}</AlertTitle>
+                {message}
+              </Alert>
+              <Snackbar
+                open={open}
+                // autoHideDuration={3000}
+                TransitionComponent={Slide}
+                onClose={handleClose}
+              >
+                <Alert severity={severity}>{message}</Alert>
+              </Snackbar>
+            </>
+          ) : (
+            <div></div>
+          )}
           <div style={{ marginBottom: "10px" }}></div>
           <Grid container spacing={2}>
             <Grid item xs={12} sm={6}>
@@ -191,6 +263,7 @@ const Bookings = () => {
               />
             </Grid>
           </Grid>
+
           <div style={{ marginBottom: "20px" }}></div>
           <Container component={Card} maxWidth="lg">
             <Grid container>
@@ -236,7 +309,9 @@ const Bookings = () => {
                           <TableCell>{order.product_location}</TableCell>
                           <TableCell>{order.price}</TableCell>
                           <TableCell>{order.product_address}</TableCell>
-                          <TableCell>{order.booking_status}</TableCell>
+                          <TableCell>
+                            {checkStatus(order.booking_status)}
+                          </TableCell>
                           <TableCell>{order.booking_message}</TableCell>
                           <TableCell>
                             {" "}
@@ -249,7 +324,16 @@ const Bookings = () => {
                                 booking_id={order.booking_id}
                               />
 
-                              <IconButton>
+                              <IconButton
+                                onClick={() => {
+                                  if (
+                                    window.confirm(
+                                      "Are you sure you want to delete this booking?"
+                                    )
+                                  )
+                                    deleteBooking(order.booking_id);
+                                }}
+                              >
                                 <Delete style={{ color: "#d32f2f" }} />
                               </IconButton>
                             </TableCell>
