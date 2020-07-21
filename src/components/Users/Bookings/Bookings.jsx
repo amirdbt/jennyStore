@@ -307,7 +307,7 @@ const Bookings = () => {
                           <TableCell>{order.product_storename}</TableCell>
                           <TableCell>{order.store_contact}</TableCell>
                           <TableCell>{order.product_location}</TableCell>
-                          <TableCell>{order.price}</TableCell>
+                          <TableCell>{order.product_price}</TableCell>
                           <TableCell>{order.product_address}</TableCell>
                           <TableCell>
                             {checkStatus(order.booking_status)}
