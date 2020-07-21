@@ -27,9 +27,11 @@ const useStyles = makeStyles((theme) => ({
     marginRight: "20px",
     marginTop: "20px",
     maxWidth: 345,
-    width: "17%",
+    width: "25%",
     [theme.breakpoints.down("sm")]: {
-      width: "55%",
+      width: "100%",
+      marginRight: "5px",
+      marginLeft: "5px",
     },
   },
   details: {
@@ -161,9 +163,15 @@ const Products = ({ products, productLength }) => {
                     </TableRow>
                     <TableRow>
                       <TableCell style={{ fontWeight: 400 }}>
-                        Quantity
+                        Store Contact
                       </TableCell>
-                      <TableCell>{products.quantity}</TableCell>
+                      <TableCell>{products.storeContact}</TableCell>
+                    </TableRow>
+                    <TableRow>
+                      <TableCell style={{ fontWeight: 400 }}>
+                        STore Email
+                      </TableCell>
+                      <TableCell>{products.store_email}</TableCell>
                     </TableRow>
                   </TableHead>
                 </Table>
@@ -172,14 +180,14 @@ const Products = ({ products, productLength }) => {
               <CardActions>
                 <Button
                   variant="contained"
-                  style={{ backgroundColor: "#2196f3" }}
+                  style={{ backgroundColor: "#2196f3", color: "#fff" }}
                   onClick={() => {
                     if (
                       window.confirm(
                         "Are you sure you want to book this product?"
                       )
                     )
-                      book(products.storeId, products._id, products.category);
+                      book(products.store_id, products._id, products.category);
                   }}
                 >
                   Book

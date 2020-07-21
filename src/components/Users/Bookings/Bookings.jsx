@@ -30,15 +30,14 @@ import {
   KeyboardArrowRight,
   LastPage,
   Image,
-  Edit,
   AddCircle,
   Delete,
 } from "@material-ui/icons";
 import { Link } from "react-router-dom";
 import moment from "moment";
 import axios from "axios";
-// import SearchBox from "../../Utility/SearchBox";
-// import EditOrder from "./EditOrder";
+import SearchBox from "../../Utility/SearchBox";
+import EditMessage from "./Edit";
 
 const useStyles = makeStyles((theme) => ({
   head: {
@@ -172,7 +171,7 @@ const Bookings = () => {
       });
   };
   const filteredOrders = orders.filter((order) => {
-    return order.category.toLowerCase().includes(searchField.toLowerCase());
+    return order.product_name.toLowerCase().includes(searchField.toLowerCase());
   });
   return (
     <div className="content">
@@ -182,8 +181,14 @@ const Bookings = () => {
         <>
           <div style={{ marginBottom: "10px" }}></div>
           <Grid container spacing={2}>
-            <Grid item xs={6}>
+            <Grid item xs={12} sm={6}>
               <Typography variant="h4">All Orders</Typography>
+            </Grid>
+            <Grid item xs={12} sm={6}>
+              <SearchBox
+                place="Search Bookings..."
+                searchChange={searchChange}
+              />
             </Grid>
           </Grid>
           <div style={{ marginBottom: "20px" }}></div>
@@ -199,9 +204,16 @@ const Bookings = () => {
                           Product Name
                         </TableCell>
                         <TableCell className={classes.head}>Store</TableCell>
+                        <TableCell className={classes.head}>
+                          Store Contact
+                        </TableCell>
+                        <TableCell className={classes.head}>
+                          Store Location
+                        </TableCell>
                         <TableCell className={classes.head}>Price</TableCell>
-                        <TableCell className={classes.head}>Category</TableCell>
+                        <TableCell className={classes.head}>Address</TableCell>
                         <TableCell className={classes.head}>Status</TableCell>
+                        <TableCell className={classes.head}>Message</TableCell>
                         <TableCell className={classes.head}>
                           Order Date
                         </TableCell>
@@ -218,20 +230,24 @@ const Bookings = () => {
                       ).map((order, index) => (
                         <TableRow key={index}>
                           <TableCell>{index}</TableCell>
-                          <TableCell>{order.userName}</TableCell>
-                          <TableCell>{order.message}</TableCell>
-                          <TableCell>{order.message}</TableCell>
-                          <TableCell>{order.category}</TableCell>
-                          <TableCell>{order.message}</TableCell>
+                          <TableCell>{order.product_name}</TableCell>
+                          <TableCell>{order.product_storename}</TableCell>
+                          <TableCell>{order.store_contact}</TableCell>
+                          <TableCell>{order.product_location}</TableCell>
+                          <TableCell>{order.price}</TableCell>
+                          <TableCell>{order.product_address}</TableCell>
+                          <TableCell>{order.booking_status}</TableCell>
+                          <TableCell>{order.booking_message}</TableCell>
                           <TableCell>
                             {" "}
                             {moment(order.createdA).format("DD MMM, YYYY")}
                           </TableCell>
                           <TableCell>
                             <TableCell style={{ display: "flex" }}>
-                              <IconButton>
-                                <Edit />
-                              </IconButton>
+                              <EditMessage
+                                booking_message={order.booking_message}
+                                booking_id={order.booking_id}
+                              />
 
                               <IconButton>
                                 <Delete style={{ color: "#d32f2f" }} />

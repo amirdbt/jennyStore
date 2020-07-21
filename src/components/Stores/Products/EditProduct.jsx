@@ -323,9 +323,7 @@ const EditProduct = ({ product }) => {
                       type="text"
                       variant="outlined"
                       error={err}
-                      className={
-                        errors.categquantityory && touched.quantity && "error"
-                      }
+                      className={errors.quantity && touched.quantity && "error"}
                       value={values.quantity}
                       onChange={handleChange}
                       onBlur={handleBlur}
