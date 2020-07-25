@@ -52,7 +52,6 @@ const EditProduct = ({ product }) => {
     description,
     category,
     quantity,
-    image,
     inStock,
     _id,
   } = product;
@@ -102,7 +101,6 @@ const EditProduct = ({ product }) => {
         description,
         quantity,
         inStock,
-        image,
       }}
       onSubmit={(values, { setSubmitting, resetForm }) => {
         setTimeout(() => {
@@ -146,7 +144,6 @@ const EditProduct = ({ product }) => {
         category: Yup.string().required("Required"),
         quantity: Yup.string(),
         inStock: Yup.string(),
-        image: Yup.string(),
       })}
     >
       {(props) => {
@@ -171,7 +168,7 @@ const EditProduct = ({ product }) => {
               aria-labelledby="responsive-dialog-title"
             >
               <DialogTitle id="responsive-dialog-title">
-                {"UPDATE RECORD"}
+                {"UPDATE PRODUCT"}
               </DialogTitle>
 
               {al ? (
@@ -306,7 +303,7 @@ const EditProduct = ({ product }) => {
                           <em>None</em>
                         </MenuItem>
                         <MenuItem value="true">True</MenuItem>
-                        <MenuItem vale="false">False</MenuItem>
+                        <MenuItem value="false">False</MenuItem>
                       </Select>
                       {errors.inStock && touched.inStock && (
                         <div className={classes.error}> {errors.inStock} </div>
@@ -333,24 +330,6 @@ const EditProduct = ({ product }) => {
                     )}
                   </div>
                   <div style={{ marginBottom: "20px" }}></div>
-                  <div>
-                    <input
-                      accept="image/*"
-                      className={classes.input}
-                      id="contained-button-file"
-                      multiple
-                      type="file"
-                    />
-                    <label htmlFor="contained-button-file">
-                      <Button
-                        variant="outlined"
-                        color="primary"
-                        component="span"
-                      >
-                        Upload Image
-                      </Button>
-                    </label>
-                  </div>
                 </DialogContent>
                 <DialogActions>
                   <Button autoFocus onClick={handleClose} color="secondary">

@@ -283,7 +283,7 @@ const Orders = () => {
             </Grid>
             <Grid item xs={12} sm={6}>
               <SearchBox
-                place="Search Bookings by Cuustomer Name..."
+                place="Search Bookings by Customer Name..."
                 searchChange={searchChange}
               />
             </Grid>
