@@ -79,7 +79,7 @@ const Signin = () => {
             })
             .catch((err) => {
               console.log(err.response);
-              setMessage(err.response.data.error);
+              setMessage(err.response.data);
               setErr(true);
               setLoading(false);
             });
