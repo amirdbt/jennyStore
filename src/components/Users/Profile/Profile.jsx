@@ -20,6 +20,7 @@ import axios from "axios";
 import moment from "moment";
 import { Alert, AlertTitle } from "@material-ui/lab";
 import { useHistory } from "react-router-dom";
+import DeactivateAccount from "./DeactvateAccount";
 
 const useStyles = makeStyles((theme) => ({
   links: {
@@ -164,22 +165,7 @@ const Profile = () => {
                       <EditProfile user={user} />
                     </Grid>
                     <Grid item>
-                      <Button
-                        variant="contained"
-                        color="secondary"
-                        color="secondary"
-                        onClick={() => {
-                          if (
-                            window.confirm(
-                              "Are you sure you want to deactivate your account?"
-                            )
-                          )
-                            deactivateAccount();
-                        }}
-                      >
-                        <Delete style={{ marginRight: "5px" }} /> Deactivate
-                        Account
-                      </Button>
+                      <DeactivateAccount />
                     </Grid>
                   </Grid>
                 </CardContent>

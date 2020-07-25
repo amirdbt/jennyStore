@@ -124,7 +124,7 @@ const Products = ({ products, productLength }) => {
                   <TableHead>
                     <TableRow>
                       <TableCell style={{ fontWeight: 400 }}>Price</TableCell>
-                      <TableCell> {products.price}</TableCell>
+                      <TableCell> #{products.price}</TableCell>
                     </TableRow>
                     <TableRow>
                       <TableCell style={{ fontWeight: 400 }}>Store</TableCell>
@@ -177,7 +177,7 @@ const Products = ({ products, productLength }) => {
                       <TableCell style={{ fontWeight: 400 }}>
                         Store Policy
                       </TableCell>
-                      <TableCell>{products.store_policy}</TableCell>
+                      <TableCell>{products.storePolicy}</TableCell>
                     </TableRow>
                   </TableHead>
                 </Table>
