@@ -26,6 +26,7 @@ import {
   ExpandMore,
   AccountCircle,
   Bookmarks,
+  Store,
 } from "@material-ui/icons";
 import MenuIcon from "@material-ui/icons/Menu";
 
@@ -219,6 +220,35 @@ const Sidebar = (props) => {
                   <Bookmarks />
                 </ListItemIcon>
                 <Typography variant="h5">Bookings</Typography>
+              </ListItem>
+            </Link>
+          </>
+        )}
+        {role === "admin" && (
+          <>
+            <Link className={classes.link} to="/admin">
+              <ListItem button className={classes.listItems}>
+                <ListItemIcon className={classes.iconColor}>
+                  <Dashboard />
+                </ListItemIcon>
+                <Typography variant="h5">Dashboard</Typography>
+              </ListItem>
+            </Link>
+            <Link className={classes.link} to="/profile">
+              <ListItem button className={classes.listItems}>
+                <ListItemIcon className={classes.iconColor}>
+                  <AccountCircle />
+                </ListItemIcon>
+                <Typography variant="h5">Profile</Typography>
+              </ListItem>
+            </Link>
+
+            <Link className={classes.link} to="/stores">
+              <ListItem button className={classes.listItems}>
+                <ListItemIcon className={classes.iconColor}>
+                  <Store />
+                </ListItemIcon>
+                <Typography variant="h5">All Stores</Typography>
               </ListItem>
             </Link>
           </>

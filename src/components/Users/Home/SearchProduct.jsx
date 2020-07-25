@@ -2,17 +2,13 @@ import React, { useState } from "react";
 import {
   Button,
   Typography,
-  TextField,
-  Link,
-  LinearProgress,
+  TextField, 
   makeStyles,
   CssBaseline,
   Container,
   Grid,
   InputAdornment,
-  IconButton,
-  Card,
-  Divider,
+  Card,  
   FormControl,
   InputLabel,
   Select,
@@ -20,7 +16,6 @@ import {
   Backdrop,
   CircularProgress,
 } from "@material-ui/core";
-import { useHistory } from "react-router-dom";
 import { Search, Map } from "@material-ui/icons";
 import { Alert } from "@material-ui/lab";
 import { Formik } from "formik";
@@ -70,7 +65,6 @@ const SearchProduct = () => {
   const [products, setProducts] = useState([]);
   const [productLength, setProductLength] = useState("");
   const token = localStorage.getItem("token");
-  let history = useHistory();
   const classes = useStyles();
 
   const locations = [
@@ -147,12 +141,9 @@ const SearchProduct = () => {
               setProducts(res.data.products);
               setProductLength(res.data.productsLength);
               setLoading(false);
-              //   history.push("/home");
             })
             .catch((err) => {
               console.log(err.response);
-
-              // setMessage(err.response.data);
               setErr(true);
               setLoading(false);
             });

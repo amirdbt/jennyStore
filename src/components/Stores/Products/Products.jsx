@@ -23,14 +23,11 @@ import {
   Button,
 } from "@material-ui/core";
 import {
-  AccountCircle,
-  ArrowForward,
   FirstPage,
   KeyboardArrowLeft,
   KeyboardArrowRight,
   LastPage,
   Image,
-  Edit,
   Delete,
   AddCircle,
 } from "@material-ui/icons";
@@ -38,7 +35,7 @@ import { Link } from "react-router-dom";
 import axios from "axios";
 import SearchBox from "../../Utility/SearchBox";
 import EditProduct from "./EditProduct";
-import { Alert, AlertTitle } from "@material-ui/lab";
+import { Alert } from "@material-ui/lab";
 import Categories from "../Categories";
 
 const useStyles = makeStyles((theme) => ({

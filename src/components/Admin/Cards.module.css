@@ -1,0 +1,16 @@
+.card {
+  margin: 0 2% !important;
+}
+
+.users {
+  border-bottom: 10px solid rgba(0, 0, 255, 0.5);
+}
+.stores {
+  border-bottom: 10px solid rgba(0, 255, 0, 0.5);
+}
+.bookings {
+  border-bottom: 10px solid rgba(255, 0, 0, 0.5);
+}
+.products {
+  border-bottom: 10px solid rgba(195, 0, 255, 0.5);
+}

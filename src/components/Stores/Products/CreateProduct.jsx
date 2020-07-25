@@ -67,10 +67,8 @@ const CreateProduct = () => {
   const [severity, setSeverity] = useState("success");
   const [loading, setLoading] = useState(false);
   const [loading2, setLoading2] = useState(false);
-  const [showPassword, setShowPassword] = useState(false);
   const [categories, setCategories] = useState([]);
-  const handleClickShowPassword = () => setShowPassword(!showPassword);
-  const handleMouseDownPassword = () => setShowPassword(!showPassword);
+
   const classes = useStyles();
   const token = localStorage.getItem("token");
 

@@ -170,7 +170,7 @@ const Orders = () => {
       });
   };
   const filteredOrders = orders.filter((order) => {
-    return order.booking_status
+    return order.customer_user_name
       .toLowerCase()
       .includes(searchField.toLowerCase());
   });
@@ -283,7 +283,7 @@ const Orders = () => {
             </Grid>
             <Grid item xs={12} sm={6}>
               <SearchBox
-                place="Search Bookings by status..."
+                place="Search Bookings by Cuustomer Name..."
                 searchChange={searchChange}
               />
             </Grid>

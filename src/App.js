@@ -13,6 +13,8 @@ import Login from "./components/Users/Signin/Login";
 import Home from "./components/Users/Home/Home";
 import Profile from "./components/Users/Profile/Profile";
 import Bookings from "./components/Users/Bookings/Bookings";
+import AdminDashboard from "./components/Admin/AdminDashboard";
+import AllStores from "./components/Admin/AllStores";
 
 const Main = withRouter(({ location }) => {
   return (
@@ -40,6 +42,9 @@ const Main = withRouter(({ location }) => {
 
         <AuthGuard path="/profile" component={Profile} />
         <AuthGuard path="/bookings" component={Bookings} />
+
+        <AuthGuard path="/admin" component={AdminDashboard} />
+        <AuthGuard path="/stores" component={AllStores} />
       </Switch>
     </>
   );
