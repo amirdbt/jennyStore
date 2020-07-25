@@ -13,6 +13,7 @@ import {
   Snackbar,
   Slide,
   IconButton,
+  Tooltip,
 } from "@material-ui/core";
 import axios from "axios";
 import { Formik } from "formik";
@@ -105,9 +106,11 @@ const EditMessage = ({ booking_id, booking_message }) => {
         } = props;
         return (
           <div>
-            <IconButton onClick={handleClickOpen}>
-              <Edit />
-            </IconButton>
+            <Tooltip title="Edit booking" arrow>
+              <IconButton onClick={handleClickOpen}>
+                <Edit />
+              </IconButton>
+            </Tooltip>
             <Dialog
               fullScreen={fullScreen}
               open={open}

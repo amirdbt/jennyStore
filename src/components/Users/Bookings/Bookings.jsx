@@ -21,6 +21,7 @@ import {
   Button,
   Snackbar,
   Slide,
+  Tooltip,
 } from "@material-ui/core";
 import {
   FirstPage,
@@ -29,11 +30,11 @@ import {
   LastPage,
   Delete,
 } from "@material-ui/icons";
-import moment from "moment";
 import axios from "axios";
 import SearchBox from "../../Utility/SearchBox";
 import EditMessage from "./Edit";
 import { Alert, AlertTitle } from "@material-ui/lab";
+import ViewBookings from "./ViewBookings";
 
 const useStyles = makeStyles((theme) => ({
   head: {
@@ -280,16 +281,12 @@ const Bookings = () => {
                         <TableCell className={classes.head}>
                           Store Contact
                         </TableCell>
+
                         <TableCell className={classes.head}>
-                          Store Location
+                          Price (Naira)
                         </TableCell>
-                        <TableCell className={classes.head}>Price</TableCell>
-                        <TableCell className={classes.head}>Address</TableCell>
                         <TableCell className={classes.head}>Status</TableCell>
-                        <TableCell className={classes.head}>Message</TableCell>
-                        <TableCell className={classes.head}>
-                          Order Date
-                        </TableCell>
+
                         <TableCell className={classes.head}>Actions</TableCell>
                       </TableRow>
                     </TableHead>
@@ -306,24 +303,19 @@ const Bookings = () => {
                           <TableCell>{order.product_name}</TableCell>
                           <TableCell>{order.product_storename}</TableCell>
                           <TableCell>{order.store_contact}</TableCell>
-                          <TableCell>{order.product_location}</TableCell>
                           <TableCell>{order.product_price}</TableCell>
-                          <TableCell>{order.product_address}</TableCell>
                           <TableCell>
                             {checkStatus(order.booking_status)}
                           </TableCell>
-                          <TableCell>{order.booking_message}</TableCell>
-                          <TableCell>
-                            {" "}
-                            {moment(order.createdA).format("DD MMM, YYYY")}
-                          </TableCell>
-                          <TableCell>
-                            <TableCell style={{ display: "flex" }}>
-                              <EditMessage
-                                booking_message={order.booking_message}
-                                booking_id={order.booking_id}
-                              />
 
+                          <TableCell style={{ display: "flex" }}>
+                            <ViewBookings order={order} />
+                            <EditMessage
+                              booking_message={order.booking_message}
+                              booking_id={order.booking_id}
+                            />
+
+                            <Tooltip title="Delete Boking" arrow>
                               <IconButton
                                 onClick={() => {
                                   if (
@@ -336,7 +328,7 @@ const Bookings = () => {
                               >
                                 <Delete style={{ color: "#d32f2f" }} />
                               </IconButton>
-                            </TableCell>
+                            </Tooltip>
                           </TableCell>
                         </TableRow>
                       ))}
