@@ -52,6 +52,7 @@ const EditProfile = ({ store }) => {
     phoneNumber,
     phone_number_two,
     phone_number_three,
+    store_policy,
   } = store;
 
   const fullScreen = useMediaQuery(theme.breakpoints.down("sm"));
@@ -76,6 +77,7 @@ const EditProfile = ({ store }) => {
         phoneNumber,
         phone_number_two,
         phone_number_three,
+        store_policy,
       }}
       onSubmit={(values, { setSubmitting, resetForm }) => {
         setTimeout(() => {
@@ -120,8 +122,9 @@ const EditProfile = ({ store }) => {
         email: Yup.string().email("Invalid email"),
         state: Yup.string(),
         phoneNumber: Yup.string(),
-        phone_number_two: Yup.string(),
-        phone_number_three: Yup.string(),
+        phone_number_two: Yup.string().nullable(),
+        phone_number_three: Yup.string().nullable(),
+        store_policy: Yup.string().nullable(),
       })}
     >
       {(props) => {
@@ -273,6 +276,29 @@ const EditProfile = ({ store }) => {
                       />
                       {errors.state && touched.state && (
                         <div className={classes.error}> {errors.state} </div>
+                      )}
+                    </div>
+                    <div>
+                      <TextField
+                        name="store_policy"
+                        label="Store Policy"
+                        variant="outlined"
+                        fullWidth
+                        type="text"
+                        error={err}
+                        value={values.store_policy || ""}
+                        className={
+                          errors.store_policy && touched.store_policy && "error"
+                        }
+                        onChange={handleChange}
+                        onBlur={handleBlur}
+                        style={{ marginBottom: "20px" }}
+                      />
+                      {errors.store_policy && touched.store_policy && (
+                        <div className={classes.error}>
+                          {" "}
+                          {errors.store_policy}{" "}
+                        </div>
                       )}
                     </div>
 

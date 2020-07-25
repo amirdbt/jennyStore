@@ -130,6 +130,8 @@ const Signup = () => {
               localStorage.setItem("token", res.data.token);
               localStorage.setItem("storeName", res.data.store.storeName);
               localStorage.setItem("role", res.data.store.role);
+              localStorage.setItem("enabled", res.data.store.enabled);
+
               setLoading(false);
               history.push("/");
             })

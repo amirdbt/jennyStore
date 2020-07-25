@@ -18,11 +18,14 @@ import moment from "moment";
 import { Alert, AlertTitle } from "@material-ui/lab";
 import EditProfile from "./EditProfile";
 import { Delete } from "@material-ui/icons";
+import styles from "../Admin/Cards.module.css";
 
 const Dashboard = () => {
   const token = localStorage.getItem("token");
   const [store, setStore] = useState({});
-
+  const [categories, setCategories] = useState("");
+  const [products, setProducts] = useState("");
+  const enabled = localStorage.getItem("enabled");
   const [loading, setLoading] = useState(false);
   useEffect(() => {
     fetchStore();
@@ -40,6 +43,8 @@ const Dashboard = () => {
       )
       .then((res) => {
         console.log(res.data);
+        setCategories(res.data.categories.length);
+        setProducts(res.data.totalProducts);
         setStore(res.data.store);
 
         setLoading(false);
@@ -53,39 +58,41 @@ const Dashboard = () => {
   const deactivateAccount = () => {
     console.log("Delete");
   };
+
   return (
     <div className="content">
       {loading ? (
         <CircularProgress style={{ marginLeft: "50%" }} />
       ) : (
         <>
+          {enabled === "false" ? (
+            <Alert severity="warning" style={{ marginBottom: "10px" }}>
+              <AlertTitle>Warning</AlertTitle>
+              Account is not enabled, Please contact admin
+            </Alert>
+          ) : (
+            <div></div>
+          )}
           <Grid container spacing={2}>
-            <Grid item xs={12} sm={6}>
-              <Card elevation={0}>
+            <Grid item xs={12} sm={4}>
+              <Card elevation={0} className={styles.users}>
                 <CardContent>
-                  <Typography> </Typography>
-                  <Typography variant="h4"></Typography>
+                  <Typography>Categories </Typography>
+                  <Typography variant="h4">{categories}</Typography>
                 </CardContent>
               </Card>
             </Grid>
-            <Grid item xs={12} sm={6}>
-              <Card elevation={0}>
+            <Grid item xs={12} sm={4}>
+              <Card elevation={0} className={styles.products}>
                 <CardContent>
-                  <Typography> </Typography>
-                  <Typography variant="h4"></Typography>
+                  <Typography>Products </Typography>
+                  <Typography variant="h4">{products}</Typography>
                 </CardContent>
               </Card>
             </Grid>
-            <Grid item xs={12} sm={6}>
-              <Card elevation={0}>
-                <CardContent>
-                  <Typography></Typography>
-                  <Typography variant="h4"></Typography>
-                </CardContent>
-              </Card>
-            </Grid>
-            <Grid item xs={12} sm={6}>
-              <Card elevation={0}>
+
+            <Grid item xs={12} sm={4}>
+              <Card elevation={0} className={styles.bookings}>
                 <CardContent>
                   <Typography>Joined</Typography>
                   <Typography variant="h4">
@@ -120,6 +127,12 @@ const Dashboard = () => {
                                 Location
                               </TableCell>
                               <TableCell>{store.location}</TableCell>
+                            </TableRow>
+                            <TableRow>
+                              <TableCell style={{ fontWeight: 400 }}>
+                                Store Policy
+                              </TableCell>
+                              <TableCell>{store.store_policy}</TableCell>
                             </TableRow>
                           </TableHead>
                         </Table>

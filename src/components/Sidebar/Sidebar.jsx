@@ -50,13 +50,19 @@ const useStyles = makeStyles((theme) => ({
   header: {
     fontSize: "35px",
     textAlign: "center",
-    lineHeight: "62px",
+    lineHeight: "60px",
     userSelect: "none",
     fontWeight: 500,
+    borderBottom: "5px solid #0d47a1",
     // backgroundColor: "#18227c",
   },
   listItems: {
     padding: "15px",
+    // transition: "all 0.5s ease",
+    "&:hover": {
+      backgroundColor: "#0d47a1 ",
+      color: "#fff",
+    },
   },
   iconColor: {
     color: "#bcbcbc",
@@ -97,6 +103,10 @@ const useStyles = makeStyles((theme) => ({
   nested: {
     paddingLeft: theme.spacing(4),
     marginLeft: theme.spacing(5),
+    "&:hover": {
+      backgroundColor: "#0d47a1 ",
+      color: "#fff",
+    },
   },
   powerIcon: {
     color: "#fff",
@@ -119,6 +129,7 @@ const Sidebar = (props) => {
   const role = localStorage.getItem("role");
   const storeName = localStorage.getItem("storeName");
   const userName = localStorage.getItem("userName");
+  const enabled = localStorage.getItem("enabled");
 
   const handleClick = () => {
     setOp(!op);
@@ -141,7 +152,113 @@ const Sidebar = (props) => {
   const handleDrawerToggle = () => {
     setMobileOpen(!mobileOpen);
   };
+  let display;
+  // console.log(role === "provider" && activate === "true");
+  // console.log("role " + role);
+  if (role === "store" && enabled === "true") {
+    display = (
+      <>
+        <Link className={classes.link} to="/">
+          <ListItem button className={classes.listItems}>
+            <ListItemIcon className={classes.iconColor}>
+              <Dashboard />
+            </ListItemIcon>
+            <Typography variant="h5">Dashboard</Typography>
+          </ListItem>
+        </Link>
+        <ListItem button className={classes.listItems} onClick={handleClick}>
+          <ListItemIcon className={classes.iconColor}>
+            <ShoppingCart />
+          </ListItemIcon>
+          <Typography variant="h5" style={{ marginRight: 80 }}>
+            Products
+          </Typography>
+          {op ? <ExpandLess /> : <ExpandMore />}
+        </ListItem>
+        <Collapse in={op} timeout="auto" unmountOnExit>
+          <List component="div" disablePadding>
+            <Link to="/products" className={classes.link}>
+              <ListItem button className={classes.nested}>
+                <Typography variant="h6" style={{ fontWeight: 400 }}>
+                  List Products
+                </Typography>
+              </ListItem>
+            </Link>
+            <Link to="/create" className={classes.link}>
+              <ListItem button className={classes.nested}>
+                <Typography variant="h6" style={{ fontWeight: 400 }}>
+                  Create Products
+                </Typography>
+              </ListItem>
+            </Link>
+          </List>
+        </Collapse>
 
+        <Link className={classes.link} to="/orders">
+          <ListItem button className={classes.listItems}>
+            <ListItemIcon className={classes.iconColor}>
+              <Folder />
+            </ListItemIcon>
+            <Typography variant="h5">Orders</Typography>
+          </ListItem>
+        </Link>
+      </>
+    );
+  } else {
+    display = (
+      <>
+        <Link className={classes.link} to="/">
+          <ListItem button className={classes.listItems}>
+            <ListItemIcon className={classes.iconColor}>
+              <Dashboard />
+            </ListItemIcon>
+            <Typography variant="h5">Dashboard</Typography>
+          </ListItem>
+        </Link>
+        <ListItem
+          button
+          className={classes.listItems}
+          onClick={handleClick}
+          disabled
+        >
+          <ListItemIcon className={classes.iconColor}>
+            <ShoppingCart />
+          </ListItemIcon>
+          <Typography variant="h5" style={{ marginRight: 80 }}>
+            Products
+          </Typography>
+          {op ? <ExpandLess /> : <ExpandMore />}
+        </ListItem>
+        <Collapse in={op} timeout="auto" unmountOnExit>
+          <List component="div" disablePadding>
+            <Link to="#" className={classes.link}>
+              <ListItem button className={classes.nested}>
+                <Typography variant="h6" style={{ fontWeight: 400 }}>
+                  List Products
+                </Typography>
+              </ListItem>
+            </Link>
+            <Link to="#" className={classes.link}>
+              <ListItem button className={classes.nested}>
+                <Typography variant="h6" style={{ fontWeight: 400 }}>
+                  Create Products
+                </Typography>
+              </ListItem>
+            </Link>
+          </List>
+        </Collapse>
+
+        <Link className={classes.link} to="#">
+          <ListItem button className={classes.listItems} disabled>
+            <ListItemIcon className={classes.iconColor}>
+              <Folder />
+            </ListItemIcon>
+            <Typography variant="h5">Orders</Typography>
+          </ListItem>
+        </Link>
+      </>
+    );
+  }
   const drawer = (
     <>
       <div className={classes.toolbar} />
@@ -151,58 +268,7 @@ const Sidebar = (props) => {
 
       <Divider />
       <List>
-        {role === "store" && (
-          <>
-            <Link className={classes.link} to="/">
-              <ListItem button className={classes.listItems}>
-                <ListItemIcon className={classes.iconColor}>
-                  <Dashboard />
-                </ListItemIcon>
-                <Typography variant="h5">Dashboard</Typography>
-              </ListItem>
-            </Link>
-            <ListItem
-              button
-              className={classes.listItems}
-              onClick={handleClick}
-            >
-              <ListItemIcon className={classes.iconColor}>
-                <ShoppingCart />
-              </ListItemIcon>
-              <Typography variant="h5" style={{ marginRight: 80 }}>
-                Products
-              </Typography>
-              {op ? <ExpandLess /> : <ExpandMore />}
-            </ListItem>
-            <Collapse in={op} timeout="auto" unmountOnExit>
-              <List component="div" disablePadding>
-                <Link to="/products" className={classes.link}>
-                  <ListItem button className={classes.nested}>
-                    <Typography variant="h6" style={{ fontWeight: 400 }}>
-                      List Products
-                    </Typography>
-                  </ListItem>
-                </Link>
-                <Link to="/create" className={classes.link}>
-                  <ListItem button className={classes.nested}>
-                    <Typography variant="h6" style={{ fontWeight: 400 }}>
-                      Create Products
-                    </Typography>
-                  </ListItem>
-                </Link>
-              </List>
-            </Collapse>
-
-            <Link className={classes.link} to="/orders">
-              <ListItem button className={classes.listItems}>
-                <ListItemIcon className={classes.iconColor}>
-                  <Folder />
-                </ListItemIcon>
-                <Typography variant="h5">Orders</Typography>
-              </ListItem>
-            </Link>
-          </>
-        )}
+        {role === "store" && display}
 
         {role === "user" && (
           <>

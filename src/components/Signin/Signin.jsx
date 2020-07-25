@@ -72,6 +72,7 @@ const Signin = () => {
               localStorage.setItem("token", res.data.storeToken);
               localStorage.setItem("storeName", res.data.store.storeName);
               localStorage.setItem("role", res.data.store.role);
+              localStorage.setItem("enabled", res.data.store.enabled);
 
               setLoading(false);
               history.push("/");
