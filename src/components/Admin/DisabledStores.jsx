@@ -33,7 +33,7 @@ import SearchBox from "../Utility/SearchBox";
 
 const useStyles = makeStyles((theme) => ({
   head: {
-    backgroundColor: "#1a237e",
+    backgroundColor: "#0d47a1",
   },
   text: {
     color: "#fff",

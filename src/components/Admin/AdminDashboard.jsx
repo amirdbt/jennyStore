@@ -82,7 +82,7 @@ const AdminDashboard = () => {
             >
               <CardContent>
                 <Typography color="textSecondary" gutterBottom>
-                  Users
+                  Bookings
                 </Typography>
                 <Typography variant="h5">{bookings}</Typography>
                 <Typography variant="body2">Number of Bookings</Typography>
@@ -97,7 +97,7 @@ const AdminDashboard = () => {
             >
               <CardContent>
                 <Typography color="textSecondary" gutterBottom>
-                  Users
+                  Products
                 </Typography>
                 <Typography variant="h5">{products}</Typography>
                 <Typography variant="body2">Number of Products</Typography>
