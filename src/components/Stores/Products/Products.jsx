@@ -215,22 +215,26 @@ const Products = () => {
 
           <div className={classes.display}>
             <Typography variant="h4">All Products</Typography>
-            <Link to="/create" style={{ textDecoration: "none" }}>
-              <Button
-                variant="contained"
-                color="primary"
-                style={{
-                  padding: 13,
-                  backgroundColor: "#0d47a1",
-                  width: 200,
-                }}
-              >
-                <AddCircle style={{ marginRight: 5 }} />
-                NEW PRODUCT
-              </Button>
-            </Link>
+            <div style={{ display: "flex" }}>
+              <Categories />
+              <Link to="/create" style={{ textDecoration: "none" }}>
+                <Button
+                  variant="contained"
+                  color="primary"
+                  style={{
+                    padding: 13,
+                    backgroundColor: "#0d47a1",
+                    width: 200,
+                    marginLeft: 10,
+                  }}
+                >
+                  <AddCircle style={{ marginRight: 5 }} />
+                  NEW PRODUCT
+                </Button>
+              </Link>
+            </div>
           </div>
-          <Categories />
+
           <div style={{ marginBottom: "20px" }}></div>
           <Container component={Card} maxWidth="lg">
             <Grid container>
@@ -240,34 +244,6 @@ const Products = () => {
                     searchChange={searchChange}
                     place="Search product..."
                   />
-
-                  <TextField
-                    id="outlined-select-currency"
-                    select
-                    label="Category"
-                    variant="outlined"
-                    style={{ width: 180, marginRight: 10 }}
-                  >
-                    <MenuItem selected value="All">
-                      All
-                    </MenuItem>
-                    <MenuItem value="Beverages">Beverages</MenuItem>
-                    <MenuItem value="Drinks">Drinks</MenuItem>
-                  </TextField>
-
-                  <TextField
-                    id="outlined-select-currency"
-                    select
-                    label="Availablity"
-                    variant="outlined"
-                    style={{ width: 180 }}
-                  >
-                    <MenuItem selected value="All">
-                      All
-                    </MenuItem>
-                    <MenuItem value="Available">Available</MenuItem>
-                    <MenuItem value="Unavailable">Unavailable</MenuItem>
-                  </TextField>
 
                   <Table aria-label="customized table">
                     <TableHead>
@@ -305,7 +281,7 @@ const Products = () => {
                               }}
                             />
                           </TableCell>
-                          <TableCell>{product.name}</TableCell>
+                          <TableCell>{product.name.toUpperCase()}</TableCell>
                           <TableCell>
                             {product.inStock ? (
                               <Chip

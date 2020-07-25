@@ -1,15 +1,29 @@
 import React, { useState, useEffect } from "react";
 import {
-  Container,
-  Card,
-  Chip,
   CircularProgress,
   makeStyles,
   Typography,
   Snackbar,
   Slide,
+  Dialog,
+  DialogActions,
+  DialogContent,
+  DialogTitle,
+  Button,
+  Table,
+  TableBody,
+  TableCell,
+  TableContainer,
+  TableHead,
+  TableRow,
+  IconButton,
+  Paper,
+  useMediaQuery,
+  useTheme,
+  Tooltip,
 } from "@material-ui/core";
 import axios from "axios";
+import { Delete } from "@material-ui/icons";
 import { Alert, AlertTitle } from "@material-ui/lab";
 
 const useStyles = makeStyles((theme) => ({
@@ -30,6 +44,10 @@ const Categories = () => {
   const [message, setMessage] = useState("");
   const [severity, setSeverity] = useState("success");
   const token = localStorage.getItem("token");
+
+  const theme = useTheme();
+
+  const fullScreen = useMediaQuery(theme.breakpoints.down("sm"));
 
   useEffect(() => {
     fetchCategories();
@@ -79,55 +97,101 @@ const Categories = () => {
         }, 1000);
       });
   };
+
+  const handleClickOpen = () => {
+    setOpen(true);
+  };
+
   const classes = useStyles();
   const handleClose = () => {
     setOpen(false);
   };
   return (
     <div>
-      {loading ? (
-        <CircularProgress style={{ marginLeft: "50%" }} />
-      ) : (
-        <>
-          {al ? (
-            <>
-              <Alert severity={severity}>
-                <AlertTitle>{severity}</AlertTitle>
-                {message}
-              </Alert>
-              <Snackbar
-                open={open}
-                // autoHideDuration={3000}
-                TransitionComponent={Slide}
-                onClose={handleClose}
-              >
-                <Alert severity={severity}>{message}</Alert>
-              </Snackbar>
-            </>
-          ) : (
-            <div></div>
-          )}
-          <Container component={Card} maxWidth="lg" className={classes.root}>
-            <Typography variant="caption" style={{ fontSize: 20 }}>
-              All Categories
-            </Typography>
-            {categories.map((category) => (
-              <Chip
-                label={category.title}
-                className={classes.chip}
-                onDelete={() => {
-                  if (
-                    window.confirm(
-                      "Are you sure you want to delete this category?"
-                    )
-                  );
-                  deleteCategory(category._id);
-                }}
-              />
-            ))}
-          </Container>
-        </>
-      )}
+      <Button
+        variant="contained"
+        color="primary"
+        disabled={loading}
+        onClick={handleClickOpen}
+        style={{
+          padding: 13,
+          backgroundColor: "#0d47a1",
+          width: 200,
+        }}
+      >
+        View Categories
+      </Button>
+      <Dialog
+        fullScreen={fullScreen}
+        open={open}
+        onClose={handleClose}
+        fullWidth
+        aria-labelledby="responsive-dialog-title"
+      >
+        <DialogTitle id="responsive-dialog-title">
+          {"View Categories"}
+        </DialogTitle>
+
+        {al ? (
+          <>
+            <Alert severity={severity}>
+              <AlertTitle>{severity}</AlertTitle>
+              {message}
+            </Alert>
+            <Snackbar
+              open={open}
+              // autoHideDuration={3000}
+              TransitionComponent={Slide}
+              onClose={handleClose}
+            >
+              <Alert severity={severity}>{message}</Alert>
+            </Snackbar>
+          </>
+        ) : (
+          <div></div>
+        )}
+        <DialogContent>
+          <TableContainer component={Paper} elevation={0}>
+            <Table aria-label="customized table">
+              <TableHead>
+                <TableRow>
+                  <TableCell className={classes.head}>Name</TableCell>
+                  <TableCell>Actions</TableCell>
+                </TableRow>
+              </TableHead>
+              <TableBody>
+                {categories.map((category, index) => (
+                  <TableRow key={index}>
+                    {" "}
+                    <TableCell>{category.title}</TableCell>
+                    <TableCell>
+                      <Tooltip title="Click to delete category" arrow>
+                        <IconButton
+                          onClick={() => {
+                            if (
+                              window.confirm(
+                                "Are you sure you want to delete this category?"
+                              )
+                            );
+                            deleteCategory(category._id);
+                          }}
+                        >
+                          <Delete color="secondary" />
+                        </IconButton>
+                      </Tooltip>
+                    </TableCell>
+                  </TableRow>
+                ))}
+              </TableBody>
+            </Table>
+          </TableContainer>
+        </DialogContent>
+        <DialogActions>
+          <Button autoFocus onClick={handleClose} color="primary">
+            Done
+          </Button>
+        </DialogActions>
+      </Dialog>
     </div>
   );
 };

@@ -296,11 +296,12 @@ const Sidebar = (props) => {
               transformOrigin={{ vertical: "top", horizontal: "right" }}
               elevation={0}
             >
-              {role === "user" && (
-                <Link to="/home" className={classes.link1}>
-                  <MenuItem onClick={handleClose}>Home</MenuItem>
-                </Link>
-              )}
+              {role === "user" ||
+                (role === "admin" && (
+                  <Link to="/home" className={classes.link1}>
+                    <MenuItem onClick={handleClose}>Home</MenuItem>
+                  </Link>
+                ))}
 
               <Link to="/signin" className={classes.link1}>
                 <MenuItem onClick={logout}>Log out</MenuItem>

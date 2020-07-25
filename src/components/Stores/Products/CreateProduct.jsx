@@ -272,7 +272,7 @@ const CreateProduct = () => {
                         </FormControl>
                       </Grid>
 
-                      <Grid item xs={12}>
+                      {/* <Grid item xs={12}>
                         <input
                           accept="image/*"
                           className={classes.input}
@@ -289,7 +289,7 @@ const CreateProduct = () => {
                             Upload Image
                           </Button>
                         </label>
-                      </Grid>
+                      </Grid> */}
                     </Grid>
                     <Button
                       fullWidth

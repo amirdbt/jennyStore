@@ -130,7 +130,7 @@ const EnabledStored = ({ stores }) => {
       )
       .then((res) => {
         console.log(res.data);
-        setMessage("Store Deactivated Successfully");
+        setMessage("Store Disabled Successfully");
         setAl(true);
         setTimeout(() => {
           window.location.reload(false);
@@ -138,7 +138,7 @@ const EnabledStored = ({ stores }) => {
       })
       .catch((error) => {
         console.log(error);
-        setMessage("Store  Deactivation Failed");
+        setMessage("Store  Disabled Failed");
         setAl(true);
         setSeverity("error");
         setTimeout(() => {
