@@ -201,7 +201,7 @@ const AllStores = () => {
   }, []);
 
   let activated = stores.filter((store) => store.deactivated === false);
-  const filteredStores = activated.length
+  const filteredStores = stores.length
     ? stores.filter((store) => {
         return store.storeName
           .toLowerCase()

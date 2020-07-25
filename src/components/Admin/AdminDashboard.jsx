@@ -49,59 +49,49 @@ const AdminDashboard = () => {
       ) : (
         <>
           <Grid container spacing={3}>
-            <Grid item component={Card} xs={12} sm={6} className={styles.users}>
-              <CardContent>
-                <Typography color="textSecondary" gutterBottom>
-                  Users
-                </Typography>
-                <Typography variant="h5">{users}</Typography>
-                <Typography variant="body2">Number of Users</Typography>
-              </CardContent>
+            <Grid item xs={12} sm={6}>
+              <Card className={styles.users}>
+                <CardContent>
+                  <Typography color="textSecondary" gutterBottom>
+                    Users
+                  </Typography>
+                  <Typography variant="h5">{users}</Typography>
+                  <Typography variant="body2">Number of Users</Typography>
+                </CardContent>
+              </Card>
             </Grid>
-            <Grid
-              item
-              component={Card}
-              xs={12}
-              sm={6}
-              className={styles.stores}
-            >
-              <CardContent>
-                <Typography color="textSecondary" gutterBottom>
-                  Stores
-                </Typography>
-                <Typography variant="h5">{stores}</Typography>
-                <Typography variant="body2">Number of Stores</Typography>
-              </CardContent>
+            <Grid item xs={12} sm={6}>
+              <Card className={styles.stores}>
+                <CardContent>
+                  <Typography color="textSecondary" gutterBottom>
+                    Stores
+                  </Typography>
+                  <Typography variant="h5">{stores}</Typography>
+                  <Typography variant="body2">Number of Stores</Typography>
+                </CardContent>
+              </Card>
             </Grid>
-            <Grid
-              item
-              component={Card}
-              xs={12}
-              sm={6}
-              className={styles.bookings}
-            >
-              <CardContent>
-                <Typography color="textSecondary" gutterBottom>
-                  Bookings
-                </Typography>
-                <Typography variant="h5">{bookings}</Typography>
-                <Typography variant="body2">Number of Bookings</Typography>
-              </CardContent>
+            <Grid item xs={12} sm={6}>
+              <Card className={styles.bookings}>
+                <CardContent>
+                  <Typography color="textSecondary" gutterBottom>
+                    Bookings
+                  </Typography>
+                  <Typography variant="h5">{bookings}</Typography>
+                  <Typography variant="body2">Number of Bookings</Typography>
+                </CardContent>
+              </Card>
             </Grid>
-            <Grid
-              item
-              component={Card}
-              xs={12}
-              sm={6}
-              className={styles.products}
-            >
-              <CardContent>
-                <Typography color="textSecondary" gutterBottom>
-                  Products
-                </Typography>
-                <Typography variant="h5">{products}</Typography>
-                <Typography variant="body2">Number of Products</Typography>
-              </CardContent>
+            <Grid item xs={12} sm={6}>
+              <Card className={styles.products}>
+                <CardContent>
+                  <Typography color="textSecondary" gutterBottom>
+                    Products
+                  </Typography>
+                  <Typography variant="h5">{products}</Typography>
+                  <Typography variant="body2">Number of Products</Typography>
+                </CardContent>
+              </Card>
             </Grid>
           </Grid>
         </>

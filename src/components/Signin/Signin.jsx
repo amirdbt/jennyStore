@@ -78,9 +78,8 @@ const Signin = () => {
               history.push("/");
             })
             .catch((err) => {
-              console.log(err);
-
-              setMessage(err.response.data.message);
+              console.log(err.response);
+              setMessage(err.response.data.error);
               setErr(true);
               setLoading(false);
             });

@@ -169,9 +169,15 @@ const Products = ({ products, productLength }) => {
                     </TableRow>
                     <TableRow>
                       <TableCell style={{ fontWeight: 400 }}>
-                        STore Email
+                        Store Email
                       </TableCell>
                       <TableCell>{products.store_email}</TableCell>
+                    </TableRow>
+                    <TableRow>
+                      <TableCell style={{ fontWeight: 400 }}>
+                        Store Policy
+                      </TableCell>
+                      <TableCell>{products.store_policy}</TableCell>
                     </TableRow>
                   </TableHead>
                 </Table>

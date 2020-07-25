@@ -19,6 +19,7 @@ import { Alert, AlertTitle } from "@material-ui/lab";
 import EditProfile from "./EditProfile";
 import { Delete } from "@material-ui/icons";
 import styles from "../Admin/Cards.module.css";
+import DeactivateAccount from "./DeactivateAccount";
 
 const Dashboard = () => {
   const token = localStorage.getItem("token");
@@ -180,22 +181,7 @@ const Dashboard = () => {
                           <div style={{ display: "flex" }}>
                             <EditProfile store={store} />
 
-                            <Button
-                              color="secondary"
-                              variant="contained"
-                              style={{ marginLeft: 10 }}
-                              onClick={() => {
-                                if (
-                                  window.confirm(
-                                    "Are you sure you want to deactivate this account?"
-                                  )
-                                );
-                                deactivateAccount();
-                              }}
-                            >
-                              <Delete />
-                              Deactivate Account
-                            </Button>
+                            <DeactivateAccount />
                           </div>
                         </CardContent>
                       </Card>
