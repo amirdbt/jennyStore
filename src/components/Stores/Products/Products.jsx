@@ -175,30 +175,6 @@ const Products = () => {
     return product.name.toLowerCase().includes(searchField.toLowerCase());
   });
 
-  // const deleteProduct = (product_id) => {
-  //   axios
-  //     .delete(`https://jenifa-stores.herokuapp.com/products/${product_id}`, {
-  //       headers: { Authorization: `${token}` },
-  //     })
-  //     .then((res) => {
-  //       console.log(res);
-  //       setMessage(res.data);
-  //       setError(true);
-  //       setTimeout(() => {
-  //         window.location.reload(false);
-  //       }, 1000);
-  //     })
-  //     .catch((error) => {
-  //       console.log(error);
-  //       setMessage("Record could not be deleted, Try again");
-  //       setError(true);
-  //       setSeverity("error");
-  //       setTimeout(() => {
-  //         window.location.reload(false);
-  //       }, 1000);
-  //     });
-  // };
-
   return (
     <div className="content">
       {loading ? (
@@ -314,18 +290,6 @@ const Products = () => {
                           <TableCell style={{ display: "flex" }}>
                             <EditProduct product={product} />
                             <DeleteProduct product_id={product._id} />
-                            {/* <IconButton
-                              onClick={() => {
-                                if (
-                                  window.confirm(
-                                    "Are you sure you want to delete this product?"
-                                  )
-                                );
-                                deleteProduct(product._id);
-                              }}
-                            >
-                              <Delete style={{ color: "#d32f2f" }} />
-                            </IconButton> */}
                           </TableCell>
                         </TableRow>
                       ))}

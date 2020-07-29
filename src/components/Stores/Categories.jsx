@@ -23,8 +23,8 @@ import {
   Tooltip,
 } from "@material-ui/core";
 import axios from "axios";
-import { Delete } from "@material-ui/icons";
 import { Alert, AlertTitle } from "@material-ui/lab";
+import DeleteCategory from "./DeleteCategory";
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -166,7 +166,8 @@ const Categories = () => {
                     <TableCell>{category.title}</TableCell>
                     <TableCell>
                       <Tooltip title="Click to delete category" arrow>
-                        <IconButton
+                        <DeleteCategory cat_id={category._id} />
+                        {/* <IconButton
                           onClick={() => {
                             if (
                               window.confirm(
@@ -177,7 +178,7 @@ const Categories = () => {
                           }}
                         >
                           <Delete color="secondary" />
-                        </IconButton>
+                        </IconButton> */}
                       </Tooltip>
                     </TableCell>
                   </TableRow>
