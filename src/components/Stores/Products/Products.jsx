@@ -35,6 +35,7 @@ import { Link } from "react-router-dom";
 import axios from "axios";
 import SearchBox from "../../Utility/SearchBox";
 import EditProduct from "./EditProduct";
+import DeleteProduct from "./DeleteProduct";
 import { Alert } from "@material-ui/lab";
 import Categories from "../Categories";
 
@@ -174,29 +175,29 @@ const Products = () => {
     return product.name.toLowerCase().includes(searchField.toLowerCase());
   });
 
-  const deleteProduct = (product_id) => {
-    axios
-      .delete(`https://jenifa-stores.herokuapp.com/products/${product_id}`, {
-        headers: { Authorization: `${token}` },
-      })
-      .then((res) => {
-        console.log(res);
-        setMessage(res.data);
-        setError(true);
-        setTimeout(() => {
-          window.location.reload(false);
-        }, 1000);
-      })
-      .catch((error) => {
-        console.log(error);
-        setMessage("Record could not be deleted, Try again");
-        setError(true);
-        setSeverity("error");
-        setTimeout(() => {
-          window.location.reload(false);
-        }, 1000);
-      });
-  };
+  // const deleteProduct = (product_id) => {
+  //   axios
+  //     .delete(`https://jenifa-stores.herokuapp.com/products/${product_id}`, {
+  //       headers: { Authorization: `${token}` },
+  //     })
+  //     .then((res) => {
+  //       console.log(res);
+  //       setMessage(res.data);
+  //       setError(true);
+  //       setTimeout(() => {
+  //         window.location.reload(false);
+  //       }, 1000);
+  //     })
+  //     .catch((error) => {
+  //       console.log(error);
+  //       setMessage("Record could not be deleted, Try again");
+  //       setError(true);
+  //       setSeverity("error");
+  //       setTimeout(() => {
+  //         window.location.reload(false);
+  //       }, 1000);
+  //     });
+  // };
 
   return (
     <div className="content">
@@ -312,8 +313,8 @@ const Products = () => {
 
                           <TableCell style={{ display: "flex" }}>
                             <EditProduct product={product} />
-
-                            <IconButton
+                            <DeleteProduct product_id={product._id} />
+                            {/* <IconButton
                               onClick={() => {
                                 if (
                                   window.confirm(
@@ -324,7 +325,7 @@ const Products = () => {
                               }}
                             >
                               <Delete style={{ color: "#d32f2f" }} />
-                            </IconButton>
+                            </IconButton> */}
                           </TableCell>
                         </TableRow>
                       ))}
