@@ -36,7 +36,7 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-const EditProfile = ({ store }) => {
+const EditProfile = ({ store, fetchStore }) => {
   console.log(store);
   const [open, setOpen] = useState(false);
   const [al, setAl] = useState(false);
@@ -150,9 +150,10 @@ const EditProfile = ({ store }) => {
               setAl(true);
               setLoading(false);
               resetForm({});
-              setTimeout(() => {
-                window.location.reload(false);
-              }, 1000);
+              fetchStore();
+              // setTimeout(() => {
+              //   window.location.reload(false);
+              // }, 1000);
             })
             .catch((err) => {
               console.log(err.response);

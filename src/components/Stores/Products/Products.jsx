@@ -288,7 +288,10 @@ const Products = () => {
                           <TableCell>{product.price}</TableCell>
 
                           <TableCell style={{ display: "flex" }}>
-                            <EditProduct product={product} />
+                            <EditProduct
+                              fetchProducts={fetchProducts}
+                              product={product}
+                            />
                             <DeleteProduct product_id={product._id} />
                           </TableCell>
                         </TableRow>

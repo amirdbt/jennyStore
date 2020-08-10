@@ -56,10 +56,6 @@ const Dashboard = () => {
       });
   };
 
-  const deactivateAccount = () => {
-    console.log("Delete");
-  };
-
   return (
     <div className="content">
       {loading ? (
@@ -179,7 +175,10 @@ const Dashboard = () => {
                           <hr />
                           <div style={{ marginBottom: "20px" }}></div>
                           <div style={{ display: "flex" }}>
-                            <EditProfile store={store} />
+                            <EditProfile
+                              fetchStore={fetchStore}
+                              store={store}
+                            />
 
                             <DeactivateAccount />
                           </div>

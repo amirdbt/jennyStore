@@ -44,7 +44,7 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-const EditProduct = ({ product }) => {
+const EditProduct = ({ product, fetchProducts }) => {
   console.log(product);
   const {
     name,
@@ -119,9 +119,7 @@ const EditProduct = ({ product }) => {
               setAl(true);
               setLoading(false);
               //   resetForm({});
-              setTimeout(() => {
-                window.location.reload(false);
-              }, 1000);
+              fetchProducts();
             })
             .catch((err) => {
               console.log(err);
